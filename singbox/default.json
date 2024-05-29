@@ -107,20 +107,6 @@
         "outbound": "dns-out"
       },
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          }
-        ],
-        "outbound": "block"
-      },
-      {
         "domain_suffix": ".ir",
         "outbound": "direct"
       },
