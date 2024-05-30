@@ -42,6 +42,7 @@
     ],
     "final": "dns-remote",
     "reverse_mapping": true,
+    "strategy": "prefer_ipv4",
     "independent_cache": true
   },
   "ntp": {
