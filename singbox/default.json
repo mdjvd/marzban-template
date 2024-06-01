@@ -80,6 +80,10 @@
     {
       "type": "block",
       "tag": "block"
+    },
+    {
+      "type": "dns",
+      "tag": "dns-out"
     }
   ],
   "route": {
@@ -110,7 +114,7 @@
             "port": 53
           }
         ],
-        "outbound": "dns"
+        "outbound": "dns-out"
       },      
       {
         "type": "logical",
