@@ -20,10 +20,6 @@
         "tag": "dns-resolver",
         "address": "178.22.122.100",
         "detour": "direct"
-      },
-      {
-        "tag": "dns-block",
-        "address": "rcode://success"
       }
     ],
     "rules": [
@@ -41,19 +37,18 @@
       }
     ],
     "final": "dns-remote",
-    "reverse_mapping": true,
-    "strategy": "prefer_ipv4",
-    "independent_cache": true
+    "strategy": "prefer_ipv4"
   },
   "ntp": {
     "enabled": false,
-    "server": "pool.ntp.org"
+    "server": "pool.ntp.org",
+    "detour": "direct"
   },
   "inbounds": [
     {
       "type": "tun",
       "tag": "tun-in",
-      "interface_name": "tun0",
+      "interface_name": "singbox-tun",
       "mtu": 9000,
       "inet4_address": "172.19.0.1/30",
       "inet6_address": "fdfe:dcba:9876::1/126",
@@ -86,14 +81,25 @@
     {
       "type": "block",
       "tag": "block"
-    },
-    {
-      "type": "dns",
-      "tag": "dns-out"
     }
   ],
   "route": {
     "rules": [
+      {
+        "ip_is_private": true,
+        "outbound": "direct"
+      },
+      {
+        "rule_set": [
+          "geosite-ir",
+          "geoip-ir"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": ".ir",
+        "outbound": "direct"
+      },
       {
         "type": "logical",
         "mode": "or",
@@ -105,15 +111,21 @@
             "port": 53
           }
         ],
-        "outbound": "dns-out"
-      },
+        "outbound": "dns"
+      },      
       {
-        "domain_suffix": ".ir",
-        "outbound": "direct"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "direct"
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "port": 853
+          },
+          {
+            "network": "udp",
+            "port": 443
+          }
+        ],
+        "outbound": "block"
       },
       {
         "rule_set": [
@@ -123,24 +135,6 @@
           "geosite-cryptominers",
           "geoip-malware",
           "geoip-phishing"
-        ],
-        "outbound": "block"
-      },
-      {
-        "rule_set": [
-          "geosite-ir",
-          "geoip-ir"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "source_ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
-        ],
-        "ip_cidr": [
-          "224.0.0.0/3",
-          "ff00::/8"
         ],
         "outbound": "block"
       }
@@ -218,9 +212,10 @@
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "store_fakeip": true
+      "store_rdrc": true
     },
     "clash_api": {
+      "default_mode": "Enhanced",
       "external_controller": "127.0.0.1:9090",
       "external_ui": "metacubexd",
       "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip",
