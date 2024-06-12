@@ -13,7 +13,6 @@
       {
         "tag": "dns-local",
         "address": "local",
-        "strategy": "prefer_ipv4",
         "detour": "direct"
       }
     ],
@@ -51,7 +50,10 @@
       "inet6_address": "fdfe:dcba:9876::1/126",
       "auto_route": true,
       "strict_route": true,
-      "stack": "gvisor"
+      "stack": "gvisor",
+      "sniff": true,
+      "sniff_override_destination": true,
+      "domain_strategy": "prefer_ipv4"
     }
   ],
   "outbounds": [
@@ -85,17 +87,6 @@
   "route": {
     "rules": [
       {
-        "rule_set": [
-          "geosite-ir",
-          "geoip-ir"
-        ],
-        "outbound": "direct"
-      },
-      {
-        "domain_suffix": ".ir",
-        "outbound": "direct"
-      },
-      {
         "type": "logical",
         "mode": "or",
         "rules": [
@@ -121,6 +112,17 @@
           }
         ],
         "outbound": "block"
+      },
+      {
+        "rule_set": [
+          "geosite-ir",
+          "geoip-ir"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": ".ir",
+        "outbound": "direct"
       },
       {
         "ip_is_private": true,
