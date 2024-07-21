@@ -6,8 +6,7 @@
         "queryStrategy": "UseIP",
         "servers": [
             "1.1.1.2",
-            "1.0.0.2",
-            "localhost"
+            "1.0.0.2"
         ],
         "tag": "dns_out"
     },
