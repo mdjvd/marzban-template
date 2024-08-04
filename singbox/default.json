@@ -31,8 +31,7 @@
         "server": "dns-local"
       }
     ],
-    "final": "dns-remote",
-    "independent_cache": true
+    "final": "dns-remote"
   },
   "inbounds": [
     {
