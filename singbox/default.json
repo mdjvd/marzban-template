@@ -47,8 +47,7 @@
       "strict_route": true,
       "stack": "mixed",
       "sniff": true,
-      "sniff_override_destination": true,
-      "domain_strategy": "prefer_ipv4"
+      "sniff_override_destination": true
     }
   ],
   "outbounds": [
