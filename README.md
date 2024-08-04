@@ -14,6 +14,7 @@
 # لیست تمپلیت ها
 - [تمپلیت برای v2ray](https://github.com/WhyMan1/marzban-template/tree/master/v2ray)
 - [تمپلیت برای sing-box](https://github.com/WhyMan1/marzban-template/tree/master/singbox)
+- [تمپلیت برای sing-box with IPv6](https://github.com/WhyMan1/marzban-template/tree/master/singboxWithIPv6)
 - [صفحه سابسکریپشن](https://github.com/WhyMan1/marzban-template/tree/master/subscription)
 - [صفحه خانه](https://github.com/WhyMan1/marzban-template/tree/master/home)
 
