@@ -30,8 +30,7 @@
         "server": "dns-local"
       }
     ],
-    "final": "dns-remote",
-    "strategy": "ipv4_only"
+    "final": "dns-remote"
   },
   "inbounds": [
     {
@@ -40,6 +39,7 @@
       "interface_name": "singbox-tun",
       "mtu": 9000,
       "inet4_address": "172.19.0.1/30",
+      "inet6_address": "fdfe:dcba:9876::1/126",
       "auto_route": true,
       "strict_route": true,
       "stack": "mixed",
