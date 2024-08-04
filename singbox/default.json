@@ -8,6 +8,7 @@
       {
         "tag": "dns-remote",
         "address": "https://1.1.1.2/dns-query",
+        "strategy": "ipv4_only",
         "detour": "proxy"
       },
       {
@@ -32,7 +33,6 @@
     ],
     "final": "dns-remote",
     "reverse_mapping": true,
-    "strategy": "prefer_ipv4",
     "independent_cache": true
   },
   "inbounds": [
@@ -93,20 +93,6 @@
           }
         ],
         "outbound": "dns-out"
-      },
-      {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "port": 853
-          },
-          {
-            "network": "udp",
-            "port": 443
-          }
-        ],
-        "outbound": "block"
       },
       {
         "rule_set": [
