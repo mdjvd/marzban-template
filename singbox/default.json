@@ -136,7 +136,7 @@
           "0.0.0.0/8"
         ],
         "outbound": "block"
-      },      
+      },
       {
         "rule_set": [
           "geosite-category-ads-all",
