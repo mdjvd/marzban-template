@@ -3,10 +3,12 @@
         "loglevel": "warning"
     },
     "dns": {
-        "queryStrategy": "UseIP",
+        "queryStrategy": "UseIPv4",
+        "hosts": {
+            "dns.google": ["8.8.8.8", "8.8.4.4"]
+                 }
         "servers": [
-            "1.1.1.2",
-            "1.0.0.2"
+            "https://8.8.8.8/dns-query/"
         ],
         "tag": "dns_out"
     },
@@ -18,6 +20,11 @@
                     "geosite:category-ads-all"
                 ],
                 "outboundTag": "block"
+            },
+             {
+                 "port": "53",
+                 "network": "udp",
+                 "outboundTag": "dns-out"
             },
             {
                 "domain": [
@@ -74,12 +81,19 @@
     "outbounds": [
         {
             "tag": "direct",
-            "protocol": "freedom"
+            "protocol": "freedom",
+            "settings": {
+                "domainStrategy": "ForceIPv4"
+            }
         },
         {
             "tag": "block",
             "protocol": "blackhole"
-        }
+        },
+        {
+            "tag": "dns-out",
+            "protocol": "dns"
+       }
     ],
     "stats": {}
 }
