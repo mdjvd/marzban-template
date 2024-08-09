@@ -23,7 +23,7 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/v2ray/ https://raw.githubusercontent.com/WhyMan1/marzban-template/master/mux/default.json
+sudo wget -N -P /var/lib/marzban/templates/mux/ https://raw.githubusercontent.com/WhyMan1/marzban-template/master/mux/default.json
 ```
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
 ```sh
