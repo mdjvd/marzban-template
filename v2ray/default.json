@@ -5,8 +5,8 @@
     "dns": {
         "queryStrategy": "UseIPv4",
         "servers": [
-            "https://1.1.1.2/dns-query/",
-            "https://1.0.0.2/dns-query/"
+            "https://1.1.1.2/dns-query",
+            "https://1.0.0.2/dns-query"
         ],
         "tag": "dns_out"
     },
