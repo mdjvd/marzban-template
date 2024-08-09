@@ -44,6 +44,10 @@ MUX_TEMPLATE="mux/default.json"
 ```sh
 marzban restart
 ```
+در ادامه با این دستور میتونید ادیتش کنین ری استارت مرزبان هم نمی خواد
+```sh
+sudo nano /var/lib/marzban/templates/mux/default.json
+```
 
 ## بروزرسانی
 برای بروزرسانی تمپلیت فقط کافیست مرحله ۱ را تکرار کنید.
