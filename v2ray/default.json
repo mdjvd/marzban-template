@@ -27,15 +27,13 @@
             {
                 "domain": [
                     "regexp:.*\\.ir",
-                    "domain:.ir",
-                    "geosite:private"
+                    "domain:.ir"
                 ],
                 "outboundTag": "direct"
             },
             {
                 "ip": [
-                    "geoip:ir",
-                    "geoip:private"
+                    "geoip:ir"
                 ],
                 "outboundTag": "direct"
             }

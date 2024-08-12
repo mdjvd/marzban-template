@@ -102,10 +102,6 @@
         "outbound": "direct"
       },
       {
-        "ip_is_private": true,
-        "outbound": "direct"
-      },
-      {
         "rule_set": [
           "geosite-category-ads-all",
           "geosite-malware",
