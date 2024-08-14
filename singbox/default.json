@@ -58,7 +58,7 @@
       "type": "urltest",
       "tag": "⚡️ Auto",
       "outbounds": null,
-      "url": "https://detectportal.firefox.com/",
+      "url": "https://www.gstatic.com/generate_204",
       "interval": "3m0s",
       "tolerance": 50
     },
