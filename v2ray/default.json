@@ -33,7 +33,8 @@
             },
             {
                 "ip": [
-                    "geoip:ir"
+                    "geoip:ir",
+                    "geoip:private"
                 ],
                 "outboundTag": "direct"
             }
@@ -57,9 +58,7 @@
             "sniffing": {
                 "destOverride": [
                     "http",
-                    "tls",
-                    "quic",
-                    "fakedns"
+                    "tls"
                 ],
                 "enabled": true
             },
@@ -79,7 +78,7 @@
             "tag": "direct",
             "protocol": "freedom",
             "settings": {
-                "domainStrategy": "ForceIPv4"
+                "domainStrategy": "UseIPv4"
             }
         },
         {
