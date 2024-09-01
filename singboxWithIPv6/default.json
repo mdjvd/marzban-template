@@ -14,6 +14,10 @@
         "tag": "dns-local",
         "address": "local",
         "detour": "direct"
+      },
+      {
+        "tag": "dns-block",
+        "address": "rcode://success"
       }
     ],
     "rules": [
@@ -28,6 +32,15 @@
       {
         "rule_set": "geosite-ir",
         "server": "dns-local"
+      },
+      {
+        "rule_set": [
+          "geosite-category-ads-all",
+          "geosite-malware",
+          "geosite-phishing",
+          "geosite-cryptominers"
+        ],
+        "server": "dns-block"
       }
     ],
     "final": "dns-remote"
