@@ -7,7 +7,7 @@
         "queryStrategy": "UseIPv4",
         "servers": [
             "1.1.1.2",
-            "1.0.0.2"
+            "https://1.0.0.2/dns-query"
         ],
         "tag": "dns-in"
     },
@@ -21,6 +21,7 @@
                 "outboundTag": "block"
             },
             {
+                "ip": ["1.1.1.1"],
                 "port": "53",
                 "network": "udp",
                 "outboundTag": "dns-out"
