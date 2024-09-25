@@ -1,106 +1,44 @@
 {
-  "dns": {
-    "hosts": {
-      "one.one.one.one": [
-        "1.1.1.1",
-        "1.0.0.1",
-        "2606:4700:4700::1111",
-        "2606:4700:4700::1001"
-      ],
-      "dns.google": [
-        "8.8.8.8",
-        "8.8.4.4",
-        "2001:4860:4860::8888",
-        "2001:4860:4860::8844"
-      ]
-    },
-    "servers": [
-      "1.1.1.1",
-       {
-        "address": "fakedns",
-        "domains": [
-	  "domain:*.ir",
-          "domain:.ir"
-        ],
-        "expectIPs": [
-          "geoip:ir"
-       ]
-      },
-      {
-        "address": "8.8.8.8",
-        "domains": [
-	      "domain:*.ir",
-          "domain:.ir"
-        ],
-        "expectIPs": [
-          "geoip:ir"
-       ],
-        "port": 53,
-        "queryStrategy": "UseIPv4"
-      }
-    ]
+  "log": {
+    "loglevel": "warning",
+    "dnsLog": true
   },
-"fakedns": [
-    {
-      "ipPool": "198.18.0.0/15",
-      "poolSize": 10000
-    }
-  ],
+  "dns": {
+    "servers": [
+      "1.1.1.2",
+      "https+local://1.0.0.2/dns-query"
+    ],
+    "queryStrategy": "UseIPv4",
+    "tag": "dns-in"
+  },
   "inbounds": [
     {
       "listen": "127.0.0.1",
       "port": 10808,
       "protocol": "socks",
       "settings": {
-        "auth": "noauth",
-        "udp": true,
-        "userLevel": 8
+        "udp": true
       },
       "sniffing": {
+        "enabled": true,
         "destOverride": [
           "http",
-          "tls"
-        ],
-        "enabled": true,
-        "routeOnly": false
-      },
-      "tag": "socks"
-    },
-    {
-      "listen": "127.0.0.1",
-      "port": 10809,
-      "protocol": "http",
-      "settings": {
-        "userLevel": 8
-      },
-      "tag": "http"
-    },
-    {
-      "listen": "127.0.0.1",
-      "port": 10853,
-      "protocol": "dokodemo-door",
-      "settings": {
-        "address": "1.1.1.1",
-        "network": "tcp,udp",
-        "port": 53
-      },
-      "tag": "dns-in"
+          "tls",
+          "quic"
+        ]
+      }
     }
   ],
-  "log": {
-    "loglevel": "warning"
-  },
   "outbounds": [
     {
       "protocol": "freedom",
       "settings": {
-        "domainStrategy": "UseIP"
+        "domainStrategy": "UseIPv4"
       },
       "tag": "direct"
     },
     {
       "protocol": "blackhole",
-      "type": "field",
       "tag": "block"
     },
     {
@@ -112,30 +50,28 @@
     "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
-        "inboundTag": [
-          "dns-in"
+        "ip": [
+          "1.1.1.2",
+          "1.0.0.2"
         ],
+        "outboundTag": "proxy"
+      },
+      {
+        "port": "53",
+        "network": "udp",
         "outboundTag": "dns-out"
       },
       {
-        "ip": [
-          "8.8.8.8"
-        ],
-        "outboundTag": "direct",
-        "port": "53"
-      },
-      {
         "domain": [
-          "regexp:.*\\.ir$",
-	      "domain:*.ir",
-          "domain:.ir"
+          "domain:.ir",
+          "regexp:.*\\.ir"
         ],
         "outboundTag": "direct"
       },
       {
         "ip": [
           "geoip:ir",
-          "192.168.0.0/16"
+          "geoip:private"
         ],
         "outboundTag": "direct"
       }
