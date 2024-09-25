@@ -1,0 +1,80 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "dnsLog": true
+  },
+  "dns": {
+    "servers": [
+      "1.1.1.2",
+      "https+local://1.0.0.2/dns-query"
+    ],
+    "queryStrategy": "UseIP",
+    "tag": "dns-in"
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "port": 10808,
+      "protocol": "socks",
+      "settings": {
+        "udp": true
+      },
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "http",
+          "tls",
+          "quic"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIP"
+      },
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    },
+    {
+      "protocol": "dns",
+      "tag": "dns-out"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "ip": [
+          "1.1.1.2",
+          "1.0.0.2"
+        ],
+        "outboundTag": "proxy"
+      },
+      {
+        "port": "53",
+        "network": "udp",
+        "outboundTag": "dns-out"
+      },
+      {
+        "domain": [
+          "domain:.ir",
+          "regexp:.*\\.ir"
+        ],
+        "outboundTag": "direct"
+      },
+      {
+        "ip": [
+          "geoip:ir",
+          "geoip:private"
+        ],
+        "outboundTag": "direct"
+      }
+    ]
+  }
+}
