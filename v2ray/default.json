@@ -43,6 +43,12 @@
     },
     {
       "protocol": "dns",
+      "settings": {
+        "nonIPQuery": "drop"
+      },
+      "proxySettings": {
+        "tag": "proxy"
+      },
       "tag": "dns-out"
     }
   ],
