@@ -40,27 +40,11 @@
     {
       "protocol": "blackhole",
       "tag": "block"
-    },
-    {
-      "protocol": "dns",
-      "tag": "dns-out"
     }
   ],
   "routing": {
     "domainStrategy": "IPIfNonMatch",
     "rules": [
-      {
-        "ip": [
-          "1.1.1.2",
-          "1.0.0.2"
-        ],
-        "outboundTag": "proxy"
-      },
-      {
-        "port": "53",
-        "network": "udp",
-        "outboundTag": "dns-out"
-      },
       {
         "domain": [
           "domain:.ir",
