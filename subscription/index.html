@@ -276,6 +276,10 @@
             </div>
             <div class="info">
                 <div class="info-item">
+                    <span class="info-label">کاربر:</span>
+                    <span id="data-username">نام کاربری</span>
+                </div>
+                <div class="info-item">
                     <span class="info-label">حجم کل اشتراک:</span>
                     <span id="data-limit">نامحدود</span>
                 </div>
@@ -465,6 +469,7 @@
                     const importButton = document.getElementById('sing-box-import-button');
                     const subscriptionUrl = encodeURIComponent(data.subscription_url);
                     const username = encodeURIComponent(data.username);
+                    document.getElementById('data-username').textContent = username;
                     importButton.href = `sing-box://import-remote-profile?url=${subscriptionUrl}#${username}`;
 
                 })
