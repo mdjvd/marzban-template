@@ -22,22 +22,11 @@
     ],
     "rules": [
       {
-        "outbound": "any",
-        "server": "dns-local"
-      },
-      {
         "domain_suffix": ".ir",
         "server": "dns-local"
       },
       {
-        "rule_set": [
-          "geosite-ads",
-          "iran-geosite-ads"
-        ],
-        "server": "dns-block"
-      },
-      {
-        "rule_set": "iran-geosite-all",
+        "outbound": "any",
         "server": "dns-local"
       }
     ],
@@ -108,43 +97,6 @@
       {
         "ip_is_private": true,
         "outbound": "direct"
-      },
-      {
-        "rule_set": [
-          "geosite-ads",
-          "iran-geosite-ads"
-        ],
-        "outbound": "block"
-      },
-      {
-        "rule_set": "iran-geosite-all",
-        "outbound": "direct"
-      }
-    ],
-    "rule_set": [
-      {
-        "type": "remote",
-        "tag": "iran-geosite-ads",
-        "format": "binary",
-        "url": "https://github.com/bootmortis/sing-geosite/releases/latest/download/geosite-ads.srs",
-        "download_detour": "direct",
-        "update_interval": "168h0m0s"
-      },
-      {
-        "type": "remote",
-        "tag": "iran-geosite-all",
-        "format": "binary",
-        "url": "https://github.com/bootmortis/sing-geosite/releases/latest/download/geosite-all.srs",
-        "download_detour": "direct",
-        "update_interval": "168h0m0s"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-ads",
-        "format": "binary",
-        "url": "https://github.com/DustinWin/ruleset_geodata/releases/download/sing-box-ruleset/ads.srs",
-        "download_detour": "direct",
-        "update_interval": "168h0m0s"
       }
     ],
     "final": "proxy",
