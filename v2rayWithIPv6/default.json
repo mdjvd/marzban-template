@@ -5,8 +5,7 @@
   },
   "dns": {
     "servers": [
-      "1.1.1.2",
-      "https+local://1.0.0.2/dns-query"
+      "https://1.1.1.2/dns-query"
     ],
     "queryStrategy": "UseIP",
     "tag": "dns-in"
