@@ -99,8 +99,6 @@
         "outbound": "direct"
       }
     ],
-    "rule_set": [
-    ],
     "final": "proxy",
     "auto_detect_interface": true,
     "override_android_vpn": true
