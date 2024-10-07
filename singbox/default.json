@@ -26,17 +26,6 @@
         "server": "dns-local"
       },
       {
-        "geosite": "category-ir",
-        "server": "dns-local"
-      },
-      {
-        "geosite": [
-          "category-ads-all",
-          "category-ads-ir"
-        ],
-        "server": "dns-block"
-      },
-      {
         "outbound": "any",
         "server": "dns-local"
       }
@@ -102,26 +91,11 @@
         "outbound": "dns-out"
       },
       {
-        "geosite": [
-          "category-ads-all",
-          "category-ads-ir"
-        ],
-        "outbound": "block"
-      },
-      {
-        "ip_is_private": true,
-        "outbound": "direct"
-      },
-      {
         "domain_suffix": ".ir",
         "outbound": "direct"
       },
       {
-        "geosite": "category-ir",
-        "outbound": "direct"
-      },
-      {
-        "geoip": "ir",
+        "ip_is_private": true,
         "outbound": "direct"
       }
     ],
