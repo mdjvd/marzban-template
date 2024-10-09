@@ -16,7 +16,7 @@
 - [تمپلیت برای V2ray (with IPv6)](https://github.com/mdjvd/marzban-template/tree/master/v2rayWithIPv6)
 - [تمپلیت برای Sing-Box](https://github.com/mdjvd/marzban-template/tree/master/singbox)
 - [تمپلیت برای Sing-Box (with IPv6)](https://github.com/mdjvd/marzban-template/tree/master/singboxWithIPv6)
-- [تمپلیت برای Clash](https://github.com/mdjvd/marzban-template/tree/master/singbox)
+- [تمپلیت برای Clash](https://github.com/mdjvd/marzban-template/tree/master/clash)
 - [تمپلیت برای Mux](https://github.com/mdjvd/marzban-template/tree/master/mux)
 - [صفحه سابسکریپشن (MuhammadAshouri)](https://github.com/mdjvd/marzban-template/tree/master/subscription)
 
