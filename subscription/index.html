@@ -1,485 +1,667 @@
 <!DOCTYPE html>
-<html lang="fa">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه اشتراک</title>
-    <link href='https://fonts.googleapis.com/css?family=Vazirmatn' rel='stylesheet'>
-    <style>
-        body {
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: #121212;
-            color: #e0e0e0;
-            direction: rtl;
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ user.username }} - Sub Info</title>
+    <link href="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/build.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/qrcode.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs-i18n@2.4.0/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ryangjchandler/alpine-clipboard@2.2.0/dist/alpine-clipboard.js"></script>
+    <script>
+        const dataLimit = "{% if not user.data_limit %}∞{% else %}{{ user.data_limit }}{% endif %}";
+        const dataUsed = "{{ user.used_traffic }}";
+        const expireDateInit = "{% if user.status.value == 'on_hold' %}-{% elif not user.expire %}∞{% else %}{% set current_timestamp = now().timestamp() %}{{ user.expire | datetime }}{% endif %}";
+        var tmpUsage = ( ( parseFloat( dataUsed ) / parseFloat( dataLimit ) ) * 100 ).toFixed( 2 );
+        if ( tmpUsage > 100 ) tmpUsage = 100;
+        const dataUsage = dataLimit == "∞" ? 100 : tmpUsage;
+        const dataChartColor = dataUsage < 40 ? "bg-green-600" : dataUsage < 80 ? "bg-yellow-600" : "bg-red-500";
+        const resetInterval = "{{ user.data_limit_reset_strategy.value }}";
+        let expireDateVar = expireDateInit.includes( "∞" ) ? "∞" : localStorage.getItem( "lang" ) == "fa" ? new Date( expireDateInit ).toLocaleString( "fa-IR-u-nu-latn" ).replace( ",", " " ) : expireDateInit;
+        let appsJson = {
+            IOS: {
+                Streisand: {
+                    url: [
+                        {
+                            name: "IOS 14+",
+                            url: "https://apps.apple.com/us/app/streisand/id6450534064",
+                            best: true,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "streisand://install-config?url=",
+                },
+                SingBox: {
+                    url: [
+                        {
+                            name: "IOS 15+",
+                            url: "https://apps.apple.com/us/app/sing-box-vt/id6673731168",
+                            best: true,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "sing-box://import-remote-profile?url=",
+                },
+                FoXray: {
+                    url: [
+                        {
+                            name: "IOS 16+",
+                            url: "https://apps.apple.com/us/app/foxray/id6448898396",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "foxray://install-config?url=",
+                },
+                V2Box: {
+                    url: [
+                        {
+                            name: "IOS 14+",
+                            url: "https://apps.apple.com/us/app/v2box-v2ray-client/id6446814690",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "v2box://install-config?url=",
+                },
+                Shadowrocket: {
+                    url: [
+                        {
+                            name: "$3.99",
+                            url: "https://apps.apple.com/ca/app/shadowrocket/id932747118",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+            },
+            Android: {
+                v2rayNG: {
+                    url: [
+                        {
+                            name: "GooglePlay",
+                            url: "https://play.google.com/store/apps/details?id=com.v2ray.ang",
+                            best: true,
+                        }
+                    ],
+                    tutorial: "",
+                    autoImport: "v2rayng://install-config?url=",
+                },    
+                SingBox: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://play.google.com/store/apps/details?id=io.nekohasekai.sfa&hl=en",
+                            best: true,
+                        }
+                    ],
+                    tutorial: "",
+                    autoImport: "sing-box://import-remote-profile?url=",
+                },
+                FlClash: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/chen08209/FlClash/releases",
+                            best: true,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "://-?url=",
+                },
+                Hiddify: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/hiddify/hiddify-next/releases",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "https://github.com/MuhammadAshouri/marzban-template-tutorial/raw/master/hiddify.mp4",
+                    autoImport: "",
+                },
+                V2Box: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://play.google.com/store/apps/details?id=dev.hexasoftware.v2box&hl=en",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+            },
+            Windows: {
+                FlClash: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/chen08209/FlClash/releases",
+                            best: true,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+                Hiddify: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/hiddify/hiddify-next/releases",
+                            best: true,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+                NekoRay: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/Mahdi-zarei/nekoray/releases",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+                v2rayN: {
+                    url: [
+                        {
+                            name: "",
+                            url: "https://github.com/2dust/v2rayN/releases",
+                            best: false,
+                        },
+                    ],
+                    tutorial: "",
+                    autoImport: "",
+                },
+            },
+        };
+        let langJson = {
+            en: {
+                active: "Active",
+                limited: "Limited",
+                expired: "Expired",
+                disabled: "Disabled",
+                onHold: "On hold",
+                dataUsage: "Data Usage: ",
+                expirationDate: "Expiration Date: ",
+                resetIntervalDay: "(Resets Every Day)",
+                resetIntervalWeek: "(Resets Every Week)",
+                resetIntervalMonth: "(Resets Every Month)",
+                resetIntervalYear: "(Resets Every Year)",
+                remainingDays: "Remaining Days: ",
+                remainingDaysSufix: " Days",
+                links: "Links",
+                apps: "Apps",
+                tutorials: "Tutorials",
+                subscription: "Subscription",
+                language: "Language",
+                settings: "Settings",
+                darkMode: "Dark mode",
+                copyAll: "Copy All",
+                proxy: "Proxy",
+                tutorial: "Tutorial",
+                download: "Download",
+                support: "Telegram Support",
+                import: "Import to app",
+                autoImport: "Auto Import",
+            },
+            fa: {
+                active: "فعال",
+                limited: "تمام شده",
+                expired: "پایان یافته",
+                disabled: "غیرفعال",
+                onHold: "در انتظار",
+                dataUsage: "مصرف داده: ",
+                expirationDate: "تاریخ پایان: ",
+                resetIntervalDay: "(ریست روزانه)",
+                resetIntervalWeek: "(ریست هفتگی)",
+                resetIntervalMonth: "(ریست ماهانه)",
+                resetIntervalYear: "(ریست سالانه)",
+                remainingDays: "روزهای باقی‌مانده: ",
+                remainingDaysSufix: " روز",
+                links: "لینک‌ها",
+                apps: "برنامه‌ها",
+                tutorials: "آموزش‌ها",
+                subscription: "لینک اشتراک",
+                language: "زبان",
+                settings: "تنظیمات",
+                darkMode: "تم تیره",
+                copyAll: "کپی همه",
+                proxy: "پروکسی",
+                tutorial: "آموزش",
+                download: "دانلود",
+                support: "پشتیبانی تلگرام",
+                import: "افزودن به نرم افزار",
+                autoImport: "افزودن خودکار",
+            },
+            ru: {
+                active: "активный",
+                limited: "ограниченное",
+                expired: "истекший",
+                disabled: "не активный",
+                onHold: "на удерживании",
+                dataUsage: "Использование данных: ",
+                expirationDate: "Дата окончания срока: ",
+                resetIntervalDay: "(сбрасывает каждый день)",
+                resetIntervalWeek: "(сбрасывается каждую неделю)",
+                resetIntervalMonth: "(сбрасывается каждый месяц)",
+                resetIntervalYear: "(сбрасывается каждый год)",
+                remainingDays: "оставшиеся дни: ",
+                remainingDaysSufix: " дни",
+                links: "ссылки",
+                apps: "Программы",
+                tutorials: "учебники",
+                subscription: "подписка",
+                language: "язык",
+                settings: "настройки",
+                darkMode: "тёмный режим",
+                copyAll: "скопировать все",
+                proxy: "прокси",
+                tutorial: "руководство",
+                download: "скачать",
+                support: "Поддержка телеграмм",
+                import: "Импортировать в приложение",
+                autoImport: "Автоматический импорт",
+            },
+        };
+        let settings = {
+            darkMode: 1,
+            language: "en",
+            support: "", // can be telegram's support username link (exp: https://t.me/gozargah_marzban)
+            proxy: "", // hides proxy button
+            //proxy: "tg://socks?server=127.0.0.1&port=2085", // opens telegram directly
+            //proxy: "https://t.me/socks?server=127.0.0.1&port=2085",  // opens telegram in browser,
+            autoImportUserLink: getUserOSLink()
+        };
+
+        document.addEventListener( "alpine:init", () =>
+        {
+            settings.darkMode = localStorage.getItem( "dark" ) ?? settings.darkMode;
+            localStorage.setItem( "dark", settings.darkMode );
+        } );
+
+        document.addEventListener( "alpine-i18n:ready", () =>
+        {
+            window.AlpineI18n.fallbackLocale = "en";
+            let locale = localStorage.getItem( "lang" ) ?? settings.language;
+            window.AlpineI18n.create( locale, langJson );
+            AlpineI18n.locale = locale;
+            document.body.setAttribute( "dir", locale == "fa" ? "rtl" : "ltr" );
+            if ( locale == "fa" ) $( document.body ).addClass( "font-[Vazirmatn]" );
+            else $( document.body ).removeClass( "font-[Vazirmatn]" );
+        } );
+
+        function getUserOSLink ()
+        {
+            var platform = navigator.platform.toLowerCase();
+
+            if ( platform.indexOf( 'win' ) !== -1 ) return appsJson.Windows.v2rayN.autoImport;
+            else if ( platform.indexOf( 'iphone' ) !== -1 || platform.indexOf( 'ipad' ) !== -1 || platform.indexOf( 'ipod' ) !== -1 || platform.indexOf( 'mac' ) !== -1 ) return appsJson.IOS.V2Box;
+            else if ( platform.indexOf( 'android' ) !== -1 || platform.indexOf( 'linux arm' ) !== -1 ) return appsJson.Android.v2rayNG.autoImport;
+            else return '';
         }
-
-        .container {
-            max-width: 500px;
-            width: 100%;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #1e1e1e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding-top: 0px;
-                background-color: #121212;
-                box-shadow: none;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 600px;
-                padding: 30px;
-            }
-
-            .status-label {
-                font-size: 16px;
-            }
-        }
-
-        .user-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto;
-            border-radius: 50%;
-            background-color: #2c2c2c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .user-icon svg {
-            width: 60%;
-            height: 60%;
-        }
-
-        .status {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: -15px;
-        }
-
-        .status-label {
-            font-size: 14px;
-            line-height: 1.5;
-            padding: 5px 10px;
-            border-radius: 15px;
-            color: #ffffff;
-            background-color: #2ecc71;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            position: relative;
-        }
-
-        .status-label.expired {
-            background-color: #f39c12;
-        }
-
-        .status-label.limited {
-            background-color: #e74c3c;
-        }
-
-        .status-label.active {
-            background-color: #2ecc71;
-        }
-
-        .status-label.disabled {
-            background-color: #7f8c8d;
-        }
-
-        .status-label.on_hold {
-            background-color: #3498db;
-        }
-
-
-        .info {
-            margin-top: 20px;
-        }
-
-        .info-item {
-            margin: 10px 0;
-            text-align: center;
-        }
-
-        .info-label {
-            font-weight: bold;
-        }
-
-        .expiration-info {
-            margin-top: 30px;
-        }
-
-        .separator {
-            margin: 20px 0;
-            border-top: 1px solid #333;
-        }
-
-        .setup-guide {
-            margin-top: 20px;
-        }
-
-        .setup-guide h2 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .steps {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .step {
-            margin-bottom: 20px;
-        }
-
-        .step-content {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .step-content h3 {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5em;
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #2ecc71;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            text-align: center;
-            margin: 0;
-        }
-
-        .step-content p {
-            margin: 10px 0 0;
-            font-size: 14px;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .square-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-decoration: none;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            transition: border-color 0.3s;
-            width: 80px;
-            height: 80px;
-            box-sizing: border-box;
-            border-color: #333;
-        }
-
-        .square-button:hover {
-            border-color: #2ecc71;
-        }
-
-        .square-button svg {
-            width: 50px;
-            height: 50px;
-        }
-
-        .square-button span {
-            margin-top: 5px;
-            font-size: 14px;
-            color: #fff;
-        }
-
-        .rectangle-button {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            padding-left: 15px;
-            transition: border-color 0.3s;
-            color: #fff;
-            box-sizing: border-box;
-            width: fit-content;
-            max-width: 100%;
-            border-color: #fff;
-        }
-
-        .rectangle-button:hover {
-            border-color: #2ecc71;
-        }
-
-        .rectangle-button svg {
-            width: 24px;
-            height: 24px;
-            margin-left: 0.5em;
-            vertical-align: middle;
-        }
-
-        .rectangle-button span {
-            font-size: 14px;
-            margin: 0;
-        }
-    </style>
+    </script>
 </head>
-
-<body>
-    <div class="container">
-        <div class="user-icon">
-            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                id="user-svg">
-                <circle cx="12" cy="9" r="3" stroke="#e0e0e0" stroke-width="1.5" />
-                <path d="M17.9691 20C17.81 17.1085 16.9247 15 11.9999 15C7.07521 15 6.18991 17.1085 6.03076 20"
-                    stroke="#e0e0e0" stroke-width="1.5" stroke-linecap="round" />
-                <path
-                    d="M7 3.33782C8.47087 2.48697 10.1786 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 10.1786 2.48697 8.47087 3.33782 7"
-                    stroke="#e0e0e0" stroke-width="1.5" stroke-linecap="round" />
-            </svg>
-        </div>
-        <div class="user-info">
-            <div class="status">
-                <div class="status-label" id="status-label">فعال</div>
-            </div>
-            <div class="info">
-                <div class="info-item">
-                    <span class="info-label">کاربر:</span>
-                    <span id="data-username">نام کاربری</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">حجم کل اشتراک:</span>
-                    <span id="data-limit">نامحدود</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">حجم مصرف شده:</span>
-                    <span id="used-traffic">۰ بایت</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">حجم باقی مانده:</span>
-                    <span id="remaining-traffic">نامحدود</span>
-                </div>
-            </div>
-            <div class="expiration-info" id="expiration-info"></div>
-        </div>
-        <div class="separator"></div>
-        <div class="setup-guide">
-            <h2>راهنما راه‌اندازی</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-content">
-                        <h3>
-                            <span class="step-number">۱</span>
-                            دانلود برنامه Sing-box
-                        </h3>
-                        <p>برنامه Sing-box را برای دستگاه خود دانلود کنید</p>
-                        <div class="button-container">
-                            <a href="https://github.com/SagerNet/sing-box/releases/download/v1.9.5/SFA-1.9.5-foss-universal.apk"
-                                target="_blank" class="square-button">
-                                <svg width="64" height="64" viewBox="0 0 512 512" fill="#ffffff">
-                                    <path
-                                        d="M120.606,169h270.788v220.663c0,13.109-10.628,23.737-23.721,23.737h-27.123v67.203c0,17.066-13.612,30.897-30.415,30.897c-16.846,0-30.438-13.831-30.438-30.897v-67.203h-47.371v67.203c0,17.066-13.639,30.897-30.441,30.897c-16.799,0-30.437-13.831-30.437-30.897v-67.203h-27.099c-13.096,0-23.744-10.628-23.744-23.737V169z M67.541,167.199c-16.974,0-30.723,13.963-30.723,31.2v121.937c0,17.217,13.749,31.204,30.723,31.204c16.977,0,30.723-13.987,30.723-31.204V198.399C98.264,181.162,84.518,167.199,67.541,167.199z M391.395,146.764H120.606c3.342-38.578,28.367-71.776,64.392-90.998l-25.746-37.804c-3.472-5.098-2.162-12.054,2.946-15.525c5.102-3.471,12.044-2.151,15.533,2.943l28.061,41.232c15.558-5.38,32.446-8.469,50.208-8.469c17.783,0,34.672,3.089,50.229,8.476L334.29,5.395c3.446-5.108,10.41-6.428,15.512-2.957c5.108,3.471,6.418,10.427,2.946,15.525l-25.725,37.804C363.047,74.977,388.055,108.175,391.395,146.764z M213.865,94.345c0-8.273-6.699-14.983-14.969-14.983c-8.291,0-14.99,6.71-14.99,14.983c0,8.269,6.721,14.976,14.99,14.976S213.865,102.614,213.865,94.345z M329.992,94.345c0-8.273-6.722-14.983-14.99-14.983c-8.291,0-14.97,6.71-14.97,14.983c0,8.269,6.679,14.976,14.97,14.976C323.271,109.321,329.992,102.614,329.992,94.345z M444.48,167.156c-16.956,0-30.744,13.984-30.744,31.222v121.98c0,17.238,13.788,31.226,30.744,31.226c16.978,0,30.701-13.987,30.701-31.226v-121.98C475.182,181.14,461.458,167.156,444.48,167.156z">
-                                    </path>
-                                </svg>
-                                <span>Download</span>
-                            </a>                          
-                            <a href="https://play.google.com/store/apps/details?id=io.nekohasekai.sfa"
-                                target="_blank" class="square-button">
-                                <svg width="64" height="64" viewBox="0 0 512 512" fill="#ffffff">
-                                    <g>
-                                        <path style="fill:#32BBFF;" d="M382.369,175.623C322.891,142.356,227.427,88.937,79.355,6.028   C69.372-0.565,57.886-1.429,47.962,1.93l254.05,254.05L382.369,175.623z"/>
-                                        <path style="fill:#32BBFF;" d="M47.962,1.93c-1.86,0.63-3.67,1.39-5.401,2.308C31.602,10.166,23.549,21.573,23.549,36v439.96   c0,14.427,8.052,25.834,19.012,31.761c1.728,0.917,3.537,1.68,5.395,2.314L302.012,255.98L47.962,1.93z"/>
-                                        <path style="fill:#32BBFF;" d="M302.012,255.98L47.956,510.035c9.927,3.384,21.413,2.586,31.399-4.103   c143.598-80.41,237.986-133.196,298.152-166.746c1.675-0.941,3.316-1.861,4.938-2.772L302.012,255.98z"/>
-                                    </g>
-                                    <path style="fill:#2C9FD9;" d="M23.549,255.98v219.98c0,14.427,8.052,25.834,19.012,31.761c1.728,0.917,3.537,1.68,5.395,2.314  L302.012,255.98H23.549z"/>
-                                    <path style="fill:#29CC5E;" d="M79.355,6.028C67.5-1.8,53.52-1.577,42.561,4.239l255.595,255.596l84.212-84.212  C322.891,142.356,227.427,88.937,79.355,6.028z"/>
-                                    <path style="fill:#D93F21;" d="M298.158,252.126L42.561,507.721c10.96,5.815,24.939,6.151,36.794-1.789  c143.598-80.41,237.986-133.196,298.152-166.746c1.675-0.941,3.316-1.861,4.938-2.772L298.158,252.126z"/>
-                                    <path style="fill:#FFD500;" d="M488.45,255.98c0-12.19-6.151-24.492-18.342-31.314c0,0-22.799-12.721-92.682-51.809l-83.123,83.123  l83.204,83.205c69.116-38.807,92.6-51.892,92.6-51.892C482.299,280.472,488.45,268.17,488.45,255.98z"/>
-                                    <path style="fill:#FFAA00;" d="M470.108,287.294c12.191-6.822,18.342-19.124,18.342-31.314H294.303l83.204,83.205  C446.624,300.379,470.108,287.294,470.108,287.294z"/>                                  </svg>
-                                <span>PlayStore</span>
-                            </a>
-                            <a href="https://apps.apple.com/us/app/sing-box-vt/id6673731168" target="_blank"
-                                class="square-button">
-                                <svg width="64" height="64" viewBox="0 0 512 512" fill="#ffffff">
-                                    <path
-                                        d="M248.644,123.476c-5.45-29.71,8.598-60.285,25.516-80.89c18.645-22.735,50.642-40.17,77.986-42.086c4.619,31.149-8.093,61.498-24.826,82.965C309.37,106.527,278.508,124.411,248.644,123.476z M409.034,231.131c8.461-23.606,25.223-44.845,51.227-59.175c-26.278-32.792-63.173-51.83-97.99-51.83c-46.065,0-65.542,21.947-97.538,21.947c-32.96,0-57.965-21.947-97.866-21.947c-39.127,0-80.776,23.848-107.19,64.577c-9.712,15.055-16.291,33.758-19.879,54.59c-9.956,58.439,4.916,134.557,49.279,202.144c21.57,32.796,50.321,69.737,87.881,70.059c33.459,0.327,42.951-21.392,88.246-21.616c45.362-0.258,53.959,21.841,87.372,21.522c37.571-0.317,67.906-41.199,89.476-73.991c15.359-23.532,21.167-35.418,33.11-62.023C414.435,352.487,389.459,285.571,409.034,231.131z">
-                                    </path>
-                                </svg>
-                                <span>Apple</span>
-                            </a>
+<body :class="settings.darkMode == 1 ? 'dark' : ''" x-data>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-main-light dark:bg-main-dark sm:py-6 transition" id="page-container">
+        <div class="relative bg-sub-light dark:bg-sub-dark px-6 pt-10 pb-8 shadow-main-sh dark:shadow-main-sh-dark sm:mx-auto sm:rounded-xl sm:px-10 bg-clip-padding backdrop-filter backdrop-blur-xl bg-opacity-0 w-full max-w-2xl">
+            <div class="mx-auto max-w-xl">
+                <div class="flex flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
+                    <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
+                        <img src="https://cdn.jsdelivr.net/gh/MuhammadAshouri/marzban-templates@master/template-01/images/marzban.svg" class="w-28" />
+                        <span class="inline-block dark:text-white text-black font-semibold text-lg">{{ user.username }}</span>
+                        <span class="px-4 py-2 rounded-full inline-block shadow-md shadow-green-900 font-bold text-gray-200" x-data="{status: '{{ user.status.value }}'}" x-text="[status == 'active' ? $t('active') : status == 'limited' ? $t('limited') : status == 'expired' ? $t('expired') : status == 'on_hold' ? $t('onHold') : $t('disabled')]" :class="[status == 'active' ? 'bg-blue-600' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600']"></span>
+                        <span class="flex cursor-pointer" onclick="openSettings()">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="w-6 h-6 stroke-blue-600 drop-shadow-lg" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-blue-600 drop-shadow-lg rtl:mr-2 ltr:ml-2" x-text="$t('settings')"></span>
+                        </span>
+                        <a class="rounded-md shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 w-4/5 cursor-pointer hover:shadow-xl stroke-blue-600" x-text="$t('proxy')" x-show="settings.proxy != ''" x-bind:href="settings.proxy"></a>
+                    </div>
+                    <div class="basis-2/3 flex flex-row items-center sm:ltr:pl-9 sm:rtl:pr-9">
+                        <div class="data-usage w-full" x-data="progressBar" x-init="Alpine.data( 'progressBar', () => progressBar )">
+                            <div class="dark:text-white text-black text-center"><span class="font-bold" x-text="$t('dataUsage')"></span><span dir="ltr">{{ user.used_traffic | bytesformat }} / {% if not user.data_limit %}∞{% else %}{{ user.data_limit | bytesformat }}{% endif %}</span></div>
+                            <div class="bg-gray-200 dark:bg-gray-900 rounded-full h-6 mt-5 drop-shadow-lg overflow-hidden" role="progressbar" :aria-valuenow="width" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar rounded-full h-6 text-center w-full dark:text-white text-black text-sm transition leading-6" :class="color" :style="`width: ${width}%; transition: width 2s;`">
+                                    <span class="absolute w-full left-0" x-text="`${width}%`"></span>
+                                </div>
+                            </div>
+                            <div class="dark:text-white text-black mt-10 text-center"><span class="font-bold" x-text="$t('expirationDate')"></span><span dir="ltr" x-data="{expireDate: ''}" x-init="Alpine.data( 'expireDate', expireDate = expireDateVar )" x-text="expireDate"></span></div>
+                            <!--2023/06/31 10:43:59-->
+                            <div class="dark:text-white text-black mt-3 text-sm text-center" x-text="resetInterval == 'year' ? $t('resetIntervalYear') : resetInterval == 'month' ? $t('resetIntervalMonth') : resetInterval == 'week' ? $t('resetIntervalWeek') : resetInterval == 'day' ? $t('resetIntervalDay') : ''"></div>
+                            <div class="dark:text-white text-black mt-5 text-center"><span class="font-bold" x-text="$t('remainingDays')"></span><span>{% if user.status.value == 'on_hold' %}-{% elif not user.expire %}∞{% else %}{% set remaining_days = ((user.expire - now().timestamp()) // (24 * 3600)) %}({{ remaining_days | int if (remaining_days | int) > -1 else 0 }}){% endif %}</span><span x-text="$t('remainingDaysSufix')"></span></div>
                         </div>
                     </div>
                 </div>
-                <div class="step">
-                    <div class="step-content">
-                        <h3>
-                            <span class="step-number">۲</span>
-                            وارد کردن اشتراک به برنامه
-                        </h3>
-                        <p>برای افزودن اشتراک خود به برنامه Sing-box، روی دکمه زیر کلیک کنید</p>
-                        <div class="button-container">
-                            <a id="sing-box-import-button" href="" target="_blank" class="rectangle-button">
-                                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 12h6m0 0h6m-6 0v6m0-6V6" />
-                                </svg>
-                                <span>وارد کردن به برنامه</span>
-                            </a>
+                <a class="rounded-md shadow-lg border-blue-600 border-2 text-black dark:text-white text-lg my-6 cursor-pointer h-16 flex flex-row justify-center items-center" x-show="settings.support != ''" x-bind:href="settings.support" target="_blank">
+                    <svg class="h-12 ltr:mr-3 rtl:ml-3" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .cls-1,
+                                .cls-3 {
+                                    fill: none;
+                                    stroke: rgb(37 99 235);
+                                    stroke-linecap: round;
+                                    stroke-linejoin: round;
+                                }
+
+                                .cls-1 {
+                                    stroke-width: 2px;
+                                }
+
+                                .cls-2 {
+                                    fill: rgb(37 99 235);
+                                }
+
+                            </style>
+                        </defs>
+                        <title />
+                        <path class="cls-1" d="M8.25,25a5,5,0,0,1-4.9-6,5.12,5.12,0,0,1,5.08-4H10V25Z" />
+                        <path class="cls-1" d="M23.75,25a5,5,0,0,0,4.9-6,5.12,5.12,0,0,0-5.08-4H22V25Z" />
+                        <path class="cls-1" d="M7,15V13.82a9.11,9.11,0,0,1,6.91-9A9,9,0,0,1,25,13.61V15" />
+                        <path class="cls-1" d="M10,25h0a3,3,0,0,0,3,3" />
+                        <circle class="cls-2" cx="16" cy="28" r="1" />
+                        <line class="cls-3" x1="7.5" x2="7.5" y1="15.5" y2="24.5" />
+                        <rect class="cls-2" height="10" width="2" x="22" y="15" />
+                    </svg>
+                    <div x-text="$t('support')"></div>
+                </a>
+                <div class="shadow-box-shadow rounded-lg p-5 mt-7" x-data>
+                    <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="main-tab" data-tabs-toggle="#tabs-content" role="tablist">
+                            <li class="flex-1" role="presentation">
+                                <button class="inline-block p-4 border-b-2 rounded-t-lg w-full transition" id="profile-tab" data-tabs-target="#links" type="button" role="tab" aria-controls="links" aria-selected="false" x-text="$t('links')"></button>
+                            </li>
+                            <li class="flex-1" role="presentation">
+                                <button class="inline-block w-full p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 transition" id="apps-tab" data-tabs-target="#apps" type="button" role="tab" aria-controls="apps" aria-selected="false" x-text="$t('apps')"></button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="tabs-content">
+                        <div class="hidden" id="links" role="tabpanel" aria-labelledby="links-tab">
+                            <ul class="list-none p-0 m-0">
+                                <li class="flex px-3 mb-3 justify-between leading-[3.5rem] shadow-lg bg-black/20 rounded-md" x-data="{link: '{{ user.subscription_url }}'}">
+                                    <span class="font-semibold flex-1 dark:text-gray-200 text-black cursor-default" x-text="$t('subscription')"></span>
+                                    <div class="flex justify-between items-center">
+                                        <a class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-data x-show="settings.autoImportUserLink != ''" :href="settings.autoImportUserLink + '{{ user.subscription_url }}'">
+                                            <svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors">
+                                                <polyline id="primary" points="13 7 13 13 7 13" style="fill: none; "></polyline>
+                                                <line id="primary-2" data-name="primary" x1="13" y1="13" x2="3" y2="3" style="fill: none; "></line>
+                                                <path id="primary-3" data-name="primary" d="M13,3h7a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V13" style="fill: none; "></path>
+                                            </svg>
+                                        </a>
+                                        <div class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-data="{copyColor: 'stroke-blue-600'}" @click="() => { navigator.clipboard.writeText( '{{ user.subscription_url }}' ); copyColor = 'stroke-green-600'; setTimeout(() => copyColor = 'stroke-blue-600', 2000); }">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors" :class="copyColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                                            </svg>
+                                        </div>
+                                        <div class="w-8 h-8 cursor-pointer qr-button" :data-link="link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% if user.status == 'active' %}
+                                <!-- <div class="bg-black/20 rounded-md shadow-lg pt-3 pb-1"> -->
+                                {% for link in user.links %}
+                                <li class="flex px-3 mb-1 justify-between leading-[3.5rem] rounded-md transition duration-300" x-data="{link: '{{ link }}'}">
+                                    <span class="font-semibold flex-1 dark:text-gray-200 text-black cursor-default" x-text="getRemark(link)"></span>
+                                    <div class="flex justify-between items-center">
+                                        <div class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-data="{copyColor: 'stroke-blue-600'}" @click="() => { navigator.clipboard.writeText( link ); copyColor = 'stroke-green-600'; setTimeout(() => copyColor = 'stroke-blue-600', 2000); }">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors" :class="copyColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                                            </svg>
+                                        </div>
+                                        <div class="w-8 h-8 cursor-pointer qr-button" :data-link="link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                <li class="rounded-md m-3 shadow-lg transition duration-300 bg-blue-600 text-white text-center text-lg py-2 mt-3 cursor-pointer hover:shadow-2xl copyAllButton stroke-blue-600" x-text="$t('copyAll')"></li>
+                                <!-- </div> -->
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="hidden" id="apps" role="tabpanel" aria-labelledby="apps-tab">
+                            <div class="flex sm:flex-row flex-col">
+                                <div class="sm:basis-1/5 sm:rtl:ml-4 sm:ltr:mr-4">
+                                    <ul class="flex sm:flex-col text-sm font-medium text-center" id="apps-tab" data-tabs-toggle="#apps-tabs-content" role="tablist">
+                                        <template x-for="item in Object.keys(appsJson)">
+                                            <li class="flex-grow mb-2" role="presentation">
+                                                <button class="inline-block p-4 border-b-2 rounded-t-lg w-full transition" :id="item + '-tab'" :data-tabs-target="'#' + item" type="button" role="tab" :aria-controls="item" aria-selected="false" x-text="item"></button>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </div>
+                                <div id="apps-tabs-content" class="sm:basis-4/5">
+                                    <template x-for="item in Object.keys(appsJson)">
+                                        <div class="hidden" :id="item" role="tabpanel" :aria-labelledby="item + '-tab'">
+                                            <ul class="list-none p-0 m-0">
+                                                <template x-for="app in Object.keys(appsJson[item]).reverse()">
+                                                    <template x-for="subApp in appsJson[item][app].url">
+                                                        <li :class="subApp.best ? 'bg-green-600/30 shadow-lg' : 'hover:bg-black/10 hover:shadow-lg'" class="flex px-3 mb-1 justify-between leading-[3.5rem] rounded-md transition duration-300" x-data="{link: subApp.url}">
+                                                            <div class="flex flex-row items-center space-x-3 rtl:space-x-reverse cursor-default">
+                                                                <span class="font-semibold flex-1 dark:text-gray-200 text-black" x-text="app"></span>
+                                                                <span :class="subApp.best ? 'dark:text-gray-200 text-gray-800' : 'text-gray-600'" class="text-sm" x-text="subApp.name"></span>
+                                                            </div>
+                                                            <div class="flex justify-between items-center">
+                                                                <a class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer" x-show="appsJson[item][app].autoImport != ''" :data-tooltip-target="'tooltip-import-' + app" :href="appsJson[item][app].autoImport + '{{ user.subscription_url }}'" :data-title="app">
+                                                                    <svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors">
+                                                                        <polyline id="primary" points="13 7 13 13 7 13" style="fill: none; "></polyline>
+                                                                        <line id="primary-2" data-name="primary" x1="13" y1="13" x2="3" y2="3" style="fill: none; "></line>
+                                                                        <path id="primary-3" data-name="primary" d="M13,3h7a1,1,0,0,1,1,1V20a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V13" style="fill: none; "></path>
+                                                                    </svg>
+                                                                </a>
+                                                                <div :id="'tooltip-import-' + app" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    <span x-text="$t('import')"></span>
+                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
+                                                                <a class="w-8 h-8 ltr:mr-3 rtl:ml-3 cursor-pointer video-button" x-show="appsJson[item][app].tutorial != ''" :data-tooltip-target="'tooltip-tutorial-' + app" :data-link="appsJson[item][app].tutorial" :data-title="app">
+                                                                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors">
+                                                                        <polygon points="23 7 16 12 23 17 23 7" />
+                                                                        <rect height="14" rx="2" ry="2" width="15" x="1" y="5" />
+                                                                    </svg>
+                                                                </a>
+                                                                <div :id="'tooltip-tutorial-' + app" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    <span x-text="$t('tutorial')"></span>
+                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
+                                                                <a class="w-8 h-8 cursor-pointer" :data-tooltip-target="'tooltip-download-' + app" :href="link" target="_blank">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="stroke-blue-600 dark:hover:stroke-gray-300 hover:stroke-gray-800 transition-colors" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                                                    </svg>
+                                                                </a>
+                                                                <div :id="'tooltip-download-' + app" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                                                    <span x-text="$t('download')"></span>
+                                                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </template>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
+    <div id="popup" class="fixed w-fit min-w-[20rem] max-h-[95vh] h-fit p-10 pt-7 shadow-dialog-shadow dark:shadow-2xl rounded-lg top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-main-light dark:bg-main-dark hidden">
+        <h2 class="h-10 leading-[2.5rem] mb-4 inline-block font-semibold text-gray-950 dark:text-white"></h2>
+        <a class="close absolute ltr:right-10 rtl:left-10 top-7 text-3xl cursor-pointer dark:text-white text-gray-950">&times;</a>
+        <div class="content rounded-lg max-h-[90%]"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.6/flowbite.min.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const url = `${window.location.href}/info`;
+        let progressBar = {
+            width: dataUsage,
+            color: dataChartColor,
+        };
 
-            function formatBytes(bytes) {
-                const sizes = ['بایت', 'کیلوبایت', 'مگابایت', 'گیگابایت', 'ترابایت'];
-                if (bytes === null || bytes === 0) return '۰ بایت';
-                const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-                return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
-            }
+        let qrSize = $( window ).width() > 500 ? ( $( window ).height() > 500 ? 400 : $( window ).height() - 200 ) : $( window ).height() > 500 ? $( window ).width() - 100 : $( window ).height() - 200;
+        $( window ).resize( function ()
+        {
+            qrSize = $( window ).width() > 500 ? ( $( window ).height() > 500 ? 400 : $( window ).height() - 200 ) : $( window ).height() > 500 ? $( window ).width() - 100 : $( window ).height() - 200;
+        } );
 
-            function formatDuration(milliseconds) {
-                const totalMinutes = Math.floor(milliseconds / (1000 * 60));
-                const totalHours = Math.floor(totalMinutes / 60);
-                const totalDays = Math.floor(totalHours / 24);
+        const popup = $( "#popup" );
+        const qrButtons = $( ".qr-button" );
+        const popupClose = $( "#popup > a.close" ).on( "click", () =>
+        {
+            popup.toggleClass( "hidden" );
+            $( "#popup > .content" ).removeClass( "bg-white p-5" ).html( "" );
+            $( "#popup > h2" ).html( "" );
+            $( "#page-container" ).removeClass( "blur-sm scale-110 -z-10" );
+            setTimeout( () =>
+            {
+                $( document.body ).removeClass( "overflow-hidden" );
+            }, 200 );
+        } );
 
-                const hours = totalHours % 24;
-                const minutes = totalMinutes % 60;
+        qrButtons.each( ( i, elem ) =>
+        {
+            $( elem ).on( "click", () =>
+            {
+                const link = $( elem ).attr( "data-link" );
+                $( "#popup > .content" ).addClass( "bg-white p-5" ).html( "" );
+                $( "#popup > .content" ).qrcode( {
+                    size: qrSize,
+                    radius: 0.2,
+                    text: link,
+                    ecLevel: "H",
+                } );
+                $( document.body ).addClass( "overflow-hidden" );
+                $( "#page-container" ).addClass( "blur-sm scale-110 -z-10" );
+                $( "#popup > h2" ).html( getRemark( link ) );
+                popup.removeClass( "hidden" );
+            } );
+        } );
 
-                const months = Math.floor(totalDays / 30);
-                const days = totalDays % 30;
+        $( ".copyAllButton" ).on( "click", async ( a ) =>
+        {
+            let links = [];
+            $( ".qr-button" ).each( ( i, ele ) =>
+            {
+                let link = $( ele ).attr( "data-link" );
+                if ( !link.startsWith( "http" ) ) links.push( link );
+            } );
+            await navigator.clipboard.writeText( links.join( "\n" ) );
+            var thisObj = $( a.target ).css( "background", "#16a34a" );
+            setTimeout( () => thisObj.css( "background", "#2563eb" ), 1500 );
+        } );
 
-                let parts = [];
+        document.addEventListener( "alpine:initialized", () =>
+        {
+            $( ".video-button" ).each( ( i, elem ) =>
+            {
+                $( elem ).on( "click", () =>
+                {
+                    const title = $( elem ).attr( "data-title" );
+                    const link = $( elem ).attr( "data-link" );
+                    $( document.body ).addClass( "overflow-hidden" );
+                    $( "#page-container" ).addClass( "blur-sm scale-110 -z-10" );
+                    $( "#popup > .content" ).html( "" );
+                    let video = $( "<video>" ).attr( "controls", "" ).addClass( "rounded-lg" );
+                    let source = $( "<source>" ).attr( { src: link, type: "video/mp4" } ).appendTo( video );
+                    video.appendTo( "#popup > .content" );
+                    $( "#popup > h2" ).html( title );
+                    popup.removeClass( "hidden" );
+                } );
+            } );
+        } );
 
-                if (months > 0) {
-                    parts.push(`${months} ماه`);
-                }
-                if (days > 0) {
-                    parts.push(`${days} روز`);
-                } else if (hours > 0) {
-                    parts.push(`${hours} ساعت`);
-                } else if (minutes > 0) {
-                    parts.push(`${minutes} دقیقه`);
-                }
+        window.addEventListener( "alpine-i18n:locale-change", function ()
+        {
+            var locale = window.AlpineI18n.locale;
+            document.body.setAttribute( "dir", locale == "fa" ? "rtl" : "ltr" );
+            if ( locale == "fa" ) $( document.body ).addClass( "font-[vazirmatn]" );
+            else $( document.body ).removeClass( "font-[vazirmatn]" );
+        } );
 
-                return parts.join(' و ') || 'لحظه‌ای';
-            }
+        function getRemark ( link )
+        {
+            if ( link.startsWith( "http" ) ) return AlpineI18n.t( "subscription" );
+            if ( link.includes( "vmess://" ) )
+            {
+                const config = JSON.parse( atob( link.replace( "vmess://", "" ) ) );
+                return config.ps;
+            } else return decodeURIComponent( link.split( "#" )[ 1 ] );
+        }
 
+        function changeLang ( ele )
+        {
+            localStorage.setItem( "lang", ele.value );
+            window.AlpineI18n.locale = ele.value;
+            document.body.setAttribute( "dir", ele.value == "fa" ? "rtl" : "ltr" );
+            if ( ele.value == "fa" ) $( document.body ).addClass( "font-[Vazirmatn]" );
+            else $( document.body ).removeClass( "font-[Vazirmatn]" );
+        }
 
-            function getExpirationText(expireTimestamp) {
-                const now = new Date();
-                const expireDate = new Date(expireTimestamp * 1000);
-                const timeDiff = expireDate - now;
+        function changeTheme ( ele )
+        {
+            settings.darkMode = ele.checked ? 1 : 0;
+            localStorage.setItem( "dark", settings.darkMode );
+            if ( !ele.checked ) $( document.body ).removeClass( "dark" );
+            else $( document.body ).addClass( "dark" );
+        }
 
-                if (expireTimestamp === null || expireTimestamp === 0) {
-                    return 'اشتراک شما بدون محدودیت زمانی است.';
-                }
-
-                if (timeDiff > 0) {
-                    return `از اشتراک شما ${formatDuration(timeDiff)} باقی مانده است.`;
-                } else {
-                    const pastMillis = Math.abs(timeDiff);
-                    return `اشتراک شما ${formatDuration(pastMillis)} پیش تمام شده است!`;
-                }
-            }
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('خطا در شبکه');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const statusMap = {
-                        "expired": "منقضی شده",
-                        "limited": "پایان حجم دوره",
-                        "active": "فعال",
-                        "disabled": "غیر فعال",
-                        "on_hold": "در انتظار اولین اتصال"
-                    };
-
-                    const statusColors = {
-                        "expired": "#f39c12",
-                        "limited": "#e74c3c",
-                        "active": "#2ecc71",
-                        "disabled": "#7f8c8d",
-                        "on_hold": "#3498db"
-                    };
-
-                    const status = data.status;
-                    const statusLabel = document.getElementById('status-label');
-                    const userSvg = document.getElementById('user-svg');
-                    statusLabel.className = `status-label ${status}`;
-                    statusLabel.textContent = statusMap[status] || 'نامشخص';
-                    const color = statusColors[status] || '#e0e0e0';
-                    userSvg.querySelectorAll('circle, path').forEach(element => {
-                        element.setAttribute('stroke', color);
-                    });
-                    const dataLimit = data.data_limit;
-                    const usedTraffic = data.used_traffic;
-                    const expire = data.expire;
-                    document.getElementById('data-limit').textContent = (dataLimit === null || dataLimit === 0) ? "نامحدود" : formatBytes(dataLimit);
-                    document.getElementById('used-traffic').textContent = formatBytes(usedTraffic);
-                    const remainingTraffic = (dataLimit === null || dataLimit === 0) ? "نامحدود" : formatBytes(Math.max(dataLimit - usedTraffic, 0));
-                    document.getElementById('remaining-traffic').textContent = remainingTraffic;
-                    if (status === 'active' || status === 'expired') {
-                        document.getElementById('expiration-info').textContent = getExpirationText(expire);
-                    } else {
-                        document.getElementById('expiration-info').textContent = '';
-                    }
-
-                    const importButton = document.getElementById('sing-box-import-button');
-                    const subscriptionUrl = encodeURIComponent(data.subscription_url);
-                    const username = encodeURIComponent(data.username);
-                    document.getElementById('data-username').textContent = username;
-                    importButton.href = `sing-box://import-remote-profile?url=${subscriptionUrl}#${username}`;
-
-                })
-                .catch(error => {
-                    const userInfoDiv = document.querySelector('.user-info');
-                    userInfoDiv.innerHTML = `<p>خطا در بارگذاری اطلاعات کاربر: ${error.message}</p>`;
-                });
-        });
+        function openSettings ()
+        {
+            $( document.body ).addClass( "overflow-hidden" );
+            $( "#page-container" ).addClass( "blur-sm scale-110 -z-10" );
+            var content = $( "#popup > .content" );
+            $(
+                `<label for="default" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
+                AlpineI18n.t( "language" ) +
+                `</label>
+<select id="default" class="bg-gray-50 border border-gray-300 text-gray-900 mb-6 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onchange="changeLang(this)">
+  <option value="en"` +
+                ( AlpineI18n.locale == "en" ? " selected" : "" ) +
+                `>English</option>
+  <option value="fa"` +
+                ( AlpineI18n.locale == "fa" ? " selected" : "" ) +
+                `>فارسی</option>
+  <option value="ru"` +
+                ( AlpineI18n.locale == "ru" ? " selected" : "" ) +
+                `>Русский</option>
+</select>
+<label class="relative flex justify-between items-center cursor-pointer">
+  <input type="checkbox" value="" class="sr-only peer"` +
+                ( settings.darkMode == 1 ? " checked" : "" ) +
+                ` onchange="changeTheme(this)">
+  <span class="text-sm font-medium text-gray-900 dark:text-white">` +
+                AlpineI18n.t( "darkMode" ) +
+                `</span>
+  <div class="w-11 h-6 relative bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+</label>
+`,
+            ).appendTo( content );
+            $( "#popup > h2" ).html( AlpineI18n.t( "settings" ) );
+            popup.removeClass( "hidden" );
+        }
     </script>
-
 </body>
-
 </html>

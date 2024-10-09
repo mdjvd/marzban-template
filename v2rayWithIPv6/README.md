@@ -25,7 +25,7 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/v2ray/ https://raw.githubusercontent.com/WhyMan1/marzban-template/master/v2rayWithIPv6/default.json
+sudo wget -N -P /var/lib/marzban/templates/v2ray/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/v2rayWithIPv6/default.json
 ```
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
 ```sh
@@ -51,10 +51,3 @@ marzban restart
 
 ## بروزرسانی
 برای بروزرسانی تمپلیت فقط کافیست مرحله ۱ را تکرار کنید.
-
-
-# حمایت از من
-
-<a href="https://nowpayments.io/donation?api_key=WE3KFT5-2VKMNSF-N1P4YQ6-24N82ZA&source=lk_donation&medium=referral" target="_blank">
-  <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
-</a>

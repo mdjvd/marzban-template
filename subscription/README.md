@@ -1,13 +1,10 @@
 <p align="center">
-  <a href="https://github.com/WhyMan1/marzban-template/tree/master/subscription" target="_blank" rel="noopener noreferrer">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/WhyMan1/marzban-template/master/subscription/PreviewTemplate.png">
-      <img width="372" height="408" src="https://raw.githubusercontent.com/WhyMan1/marzban-template/master/subscription/PreviewTemplate.png">
-    </picture>
+  <a href="https://github.com/MuhammadAshouri/marzban-templates" target="_blank" rel="noopener noreferrer" >
+    <img src="https://github.com/MuhammadAshouri/marzban-templates/blob/dca23a0ecbee84839686a1b928a2dc7e8aba4089/template-01/screenshot.jpg" alt="SubPage screenshots" width="800" height="auto">
   </a>
 </p>
-<h1 align="center"/>قالب سابسکریپشن برای پنل  <a href="https://github.com/Gozargah/Marzban">مرزبان</a></h1>
 
+Template Source: https://github.com/MuhammadAshouri/marzban-templates
 ## فهرست مطالب
 - [ویژگی‌ ها](#ویژگی-ها)
 - [مراحل نصب](#مراحل-نصب)
@@ -16,13 +13,13 @@
 یک قالب html ساده برای نمایش بهتر اطلاعات کاربر
 
 # ویژگی ها
-- افزودن سریع لینک سابسکریپشن به برنامه sing-box
+- افزودن سریع لینک سابسکریپشن به برنامه
 - لینک دانلود اپلیکیشن مورد نیاز
 
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/subscription/ https://raw.githubusercontent.com/WhyMan1/marzban-template/master/subscription/index.html
+sudo wget -N -P /var/lib/marzban/templates/subscription/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/subscription/index.html
 ```
 
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
@@ -44,9 +41,3 @@ marzban restart
 ## بروزرسانی
 برای بروزرسانی تمپلیت فقط کافیست مرحله 1 را تکرار کنید.
 
-
-# حمایت از من
-
-<a href="https://nowpayments.io/donation?api_key=WE3KFT5-2VKMNSF-N1P4YQ6-24N82ZA&source=lk_donation&medium=referral" target="_blank">
-  <img src="https://nowpayments.io/images/embeds/donation-button-black.svg" alt="Crypto donation button by NOWPayments">
-</a>
