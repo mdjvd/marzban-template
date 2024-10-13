@@ -45,15 +45,7 @@
     "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
-        "domain": [
-          "domain:.ir",
-          "regexp:.*\\.ir"
-        ],
-        "outboundTag": "direct"
-      },
-      {
         "ip": [
-          "geoip:ir",
           "geoip:private"
         ],
         "outboundTag": "direct"
