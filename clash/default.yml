@@ -160,7 +160,4 @@ rules:
   - RULE-SET,malware,REJECT
   - RULE-SET,phishing,REJECT
   - RULE-SET,cryptominers,REJECT
-  - RULE-SET,ir,DIRECT
-  - RULE-SET,ircidr,DIRECT
-  - RULE-SET,irasn,DIRECT
   - MATCH,PROXY
