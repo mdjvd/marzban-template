@@ -27,7 +27,7 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/clash/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/clash/default.yml
+sudo wget -N -P /var/lib/marzban/templates/clash/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/clash/default.yml
 ```
 
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
