@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://github.com/oXIIIo/marzban-template/" target="_blank" rel="noopener noreferrer">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gozargah/Marzban-docs/ir-indirect/screenshots/logo-dark.png">
-      <img width="160" height="160" src="https://raw.githubusercontent.com/Gozargah/Marzban-docs/ir-indirect/screenshots/logo-dark.png">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png">
+      <img width="160" height="160" src="https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png">
     </picture>
   </a>
 </p>
