@@ -27,7 +27,7 @@
 # مراحل نصب
 1. دانلود فایل template
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/singbox/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/singbox/default.json
+sudo wget -N -P /var/lib/marzban/templates/singbox/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/singbox/default.json
 ```
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
 ```sh
