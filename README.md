@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://github.com/oXIIIo/marzban-template/" target="_blank" rel="noopener noreferrer">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png">
-      <img width="160" height="160" src="https://raw.githubusercontent.com/Gozargah/Marzban-docs/master/screenshots/logo-dark.png">
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Gozargah/Marzban-docs/ir-indirect/screenshots/logo-dark.png">
+      <img width="160" height="160" src="https://raw.githubusercontent.com/Gozargah/Marzban-docs/ir-indirect/screenshots/logo-dark.png">
     </picture>
   </a>
 </p>
@@ -12,11 +12,11 @@
 لیستی از تمپلیت های شخصی سازی شده برای مرزبان
 
 # لیست تمپلیت ها
-- [تمپلیت برای V2ray](https://github.com/mdjvd/marzban-template/tree/master/v2ray)
-- [تمپلیت برای Sing-Box](https://github.com/mdjvd/marzban-template/tree/master/singbox)
-- [تمپلیت برای Clash](https://github.com/mdjvd/marzban-template/tree/master/clash)
-- [تمپلیت برای Mux](https://github.com/mdjvd/marzban-template/tree/master/mux)
-- [صفحه سابسکریپشن (MuhammadAshouri)](https://github.com/mdjvd/marzban-template/tree/master/subscription)
+- [تمپلیت برای V2ray](https://github.com/mdjvd/marzban-template/tree/ir-indirect/v2ray)
+- [تمپلیت برای Sing-Box](https://github.com/mdjvd/marzban-template/tree/ir-indirect/singbox)
+- [تمپلیت برای Clash](https://github.com/mdjvd/marzban-template/tree/ir-indirect/clash)
+- [تمپلیت برای Mux](https://github.com/mdjvd/marzban-template/tree/ir-indirect/mux)
+- [صفحه سابسکریپشن (MuhammadAshouri)](https://github.com/mdjvd/marzban-template/tree/ir-indirect/subscription)
 
 
 # مراحل نصب
@@ -26,11 +26,11 @@
 برای نصب همه تمپلیت های موجو دستورات زیر را در ترمینال سرور خود اجرا کنید:
 1. دانلود فایل های تمپلیت
 ```sh
-sudo wget -N -P /var/lib/marzban/templates/v2ray/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/v2ray/default.json
-sudo wget -N -P /var/lib/marzban/templates/singbox/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/singbox/default.json
-sudo wget -N -P /var/lib/marzban/templates/clash/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/clash/default.yml
-sudo wget -N -P /var/lib/marzban/templates/mux/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/mux/default.json
-sudo wget -N -P /var/lib/marzban/templates/subscription/ https://raw.githubusercontent.com/mdjvd/marzban-template/master/subscription/index.html
+sudo wget -N -P /var/lib/marzban/templates/v2ray/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/v2ray/default.json
+sudo wget -N -P /var/lib/marzban/templates/singbox/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/singbox/default.json
+sudo wget -N -P /var/lib/marzban/templates/clash/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/clash/default.yml
+sudo wget -N -P /var/lib/marzban/templates/mux/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/mux/default.json
+sudo wget -N -P /var/lib/marzban/templates/subscription/ https://raw.githubusercontent.com/mdjvd/marzban-template/ir-indirect/subscription/index.html
 
 ```
 2. دستورات زیر رو تو ترمینال سرورتون بزنید:
