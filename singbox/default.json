@@ -1,7 +1,6 @@
 {
   "log": {
-    "level": "warn",
-    "timestamp": true
+    "level": "warn"
   },
   "dns": {
     "servers": [
@@ -36,9 +35,6 @@
       "route_exclude_address": [
         "192.168.0.0/16",
         "fc00::/7"
-      ],
-      "route_exclude_address_set": [
-        "geoip-ir"
       ],
       "auto_route": true,
       "sniff": true,
