@@ -59,17 +59,9 @@ proxy-groups:
 - name: 'PROXY'
   type: 'select'
   proxies:
-  - '⚡️ Fastest'
   - '📶 First Available'
+  - '⚡️ Fastest'
   - '♻️ Load Balance'
-  {{ proxy_remarks | yaml | indent(2) }}
-
-- name: '⚡️ Fastest'
-  type: 'url-test'
-  tolerance: 50
-  url: 'https://cp.cloudflare.com'
-  interval: 180
-  proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
 - name: '📶 First Available'
@@ -78,11 +70,19 @@ proxy-groups:
   interval: 180
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
+  
+- name: '⚡️ Fastest'
+  type: 'url-test'
+  tolerance: 50
+  url: 'https://cp.cloudflare.com'
+  interval: 180
+  proxies:
+  {{ proxy_remarks | yaml | indent(2) }}
 
 - name: '♻️ Load Balance'
   type: 'load-balance'
   url: 'https://cp.cloudflare.com'
-  interval: 180
+  interval: 300
   strategy: 'round-robin'
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
