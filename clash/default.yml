@@ -70,7 +70,7 @@ proxy-groups:
   interval: 180
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
-  
+
 - name: '⚡️ Fastest'
   type: 'url-test'
   tolerance: 50
