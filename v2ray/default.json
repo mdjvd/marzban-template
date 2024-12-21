@@ -7,7 +7,7 @@
     "servers": [
       "https://1.1.1.2/dns-query"
     ],
-    "queryStrategy": "UseIP",
+    "queryStrategy": "UseIPv4",
     "tag": "dns-in"
   },
   "inbounds": [
@@ -50,7 +50,7 @@
     {
       "protocol": "freedom",
       "settings": {
-        "domainStrategy": "UseIP"
+        "domainStrategy": "UseIPv4"
       },
       "tag": "direct"
     },
