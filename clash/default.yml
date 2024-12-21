@@ -68,7 +68,6 @@ proxy-groups:
   type: 'fallback'
   url: 'https://cp.cloudflare.com'
   interval: 180
-  timeout: 2000
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
@@ -77,16 +76,14 @@ proxy-groups:
   tolerance: 50
   url: 'https://cp.cloudflare.com'
   interval: 180
-  timeout: 2000
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
 - name: '♻️ Load Balance'
   type: 'load-balance'
   url: 'https://cp.cloudflare.com'
-  interval: 300
-  timeout: 2000
-  strategy: 'round-robin'
+  interval: 180
+  strategy: 'consistent-hashing'
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
