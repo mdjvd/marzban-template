@@ -17,6 +17,7 @@
       },
       {
         "type": "local",
+        "tag": "local",
         "detour": "direct"
       }
     ],
