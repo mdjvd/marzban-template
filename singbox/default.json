@@ -17,15 +17,11 @@
       },
       {
         "type": "local",
-        "tag": "dns-local",
+        "tag": "local",
         "detour": "direct"
       }
     ],
     "rules": [
-      {
-        "outbound": "any",
-        "server": "dns-local"
-      },
       {
         "rule_set": "geosite-ir",
         "server": "dns-local"
