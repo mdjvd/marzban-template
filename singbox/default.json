@@ -172,10 +172,7 @@
     "final": "proxy",
     "auto_detect_interface": true,
     "override_android_vpn": true,
-    "default_domain_resolver": {
-      "server": "local",
-      "client_subnet": "1.1.1.2"
-    }
+    "default_domain_resolver": "1.1.1.2"
   },
   "experimental": {
     "cache_file": {
