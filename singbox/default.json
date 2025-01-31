@@ -15,7 +15,7 @@
         "type": "https",
         "tag": "dns-remote",
         "detour": "proxy",
-        "server": "https://1.1.1.2/dns-query",
+        "server": "1.1.1.2",
         "server_port": 443
       },
       {
