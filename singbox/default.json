@@ -2,6 +2,10 @@
   "log": {
     "level": "warn"
   },
+  "certificate":
+  {
+    "store": "system"
+  },
   "dns": {
     "servers": [
       {
@@ -77,6 +81,11 @@
     }
   ],
   "route": {
+    "default_domain_resolver": {
+      "server": "local",
+      "rewrite_tll": 60,
+      "client_subnet": "1.1.1.2"
+    },
     "rules": [
       {
         "action": "sniff"
@@ -113,8 +122,7 @@
           "geoip-malware",
           "geoip-phishing"
         ],
-        "action": "reject",
-        "method": "default"
+        "action": "reject"
       }
     ],
     "rule_set": [
@@ -185,11 +193,7 @@
     ],
     "final": "proxy",
     "auto_detect_interface": true,
-    "override_android_vpn": true,
-    "default_domain_resolver": {
-      "server": "local",
-      "client_subnet": "1.1.1.2"
-    }
+    "override_android_vpn": true
   },
   "experimental": {
     "cache_file": {
