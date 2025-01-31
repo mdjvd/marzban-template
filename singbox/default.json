@@ -2,6 +2,13 @@
   "log": {
     "level": "warn"
   },
+  "certificate":
+  {
+    "store": "system",
+    "certificate": [],
+    "certificate_path": [],
+    "certificate_directory_path": []
+  },
   "dns": {
     "servers": [
       {
