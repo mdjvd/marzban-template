@@ -14,8 +14,7 @@
     ],
     "rules": [
     ],
-    "final": "dns-remote",
-    "strategy": "prefer_ipv4"
+    "final": "dns-remote"
   },
   "inbounds": [
     {
