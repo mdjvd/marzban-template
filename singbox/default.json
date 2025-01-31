@@ -10,18 +10,9 @@
         "detour": "proxy",
         "server": "1.1.1.2",
         "server_port": 443
-      },
-      {
-        "type": "local",
-        "tag": "dns-local",
-        "detour": "direct"
       }
     ],
     "rules": [
-      {
-        "rule_set": "geosite-ir",
-        "server": "dns-local"
-      }
     ],
     "final": "dns-remote",
     "strategy": "prefer_ipv4"
@@ -181,11 +172,7 @@
     ],
     "final": "proxy",
     "auto_detect_interface": true,
-    "override_android_vpn": true,
-    "default_domain_resolver": {
-      "server": "dns-local",
-      "client_subnet": "1.1.1.2"
-    }
+    "override_android_vpn": true
   },
   "experimental": {
     "cache_file": {
