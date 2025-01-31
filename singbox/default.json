@@ -5,19 +5,25 @@
   "dns": {
     "servers": [
       {
+        "type": "https",
         "tag": "dns-remote",
-        "address": "https://1.1.1.2/dns-query",
-        "detour": "proxy"
+        "detour": "proxy",
+        "server": "https://1.1.1.2/dns-query",
+        "server_port": 443
       },
       {
+        "type": "local",
         "tag": "dns-local",
-        "address": "local",
         "detour": "direct"
       }
     ],
     "rules": [
       {
         "outbound": "any",
+        "server": "dns-local"
+      },
+      {
+        "rule_set": "geosite-ir",
         "server": "dns-local"
       }
     ],
@@ -33,13 +39,21 @@
         "172.19.0.1/30",
         "fdfe:dcba:9876::1/126"
       ],
+      "auto_route": true,
       "route_exclude_address": [
         "192.168.0.0/16",
         "fc00::/7"
       ],
-      "auto_route": true,
       "sniff": true,
       "sniff_override_destination": true
+    },
+    {
+      "type": "mixed",
+      "tag": "mixed-in",
+      "listen": "::",
+      "listen_port": 10808,
+      "tcp_fast_open": true,
+      "sniff": true
     }
   ],
   "outbounds": [
@@ -60,21 +74,20 @@
     {
       "type": "direct",
       "tag": "direct"
-    },
-    {
-      "type": "block",
-      "tag": "block"
-    },
-    {
-      "type": "dns",
-      "tag": "dns-out"
     }
   ],
   "route": {
     "rules": [
       {
+        "action": "sniff"
+      },
+      {
         "protocol": "dns",
-        "outbound": "dns-out"
+        "action": "hijack-dns"
+      },
+      {
+        "inbound": "mixed-in",
+        "action": "sniff"
       },
       {
         "rule_set": [
@@ -100,7 +113,7 @@
           "geoip-malware",
           "geoip-phishing"
         ],
-        "outbound": "block"
+        "action": "reject"
       }
     ],
     "rule_set": [
