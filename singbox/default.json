@@ -5,24 +5,16 @@
   "dns": {
     "servers": [
       {
+        "type": "https",
         "tag": "dns-remote",
-        "address": "https://1.1.1.2/dns-query",
-        "detour": "proxy"
+        "detour": "proxy",
+        "server": "1.1.1.2",
+        "server_port": 443
       },
       {
+        "type": "local",
         "tag": "dns-local",
-        "address": "local",
         "detour": "direct"
-      }
-    ],
-    "rules": [
-      {
-        "outbound": "any",
-        "server": "dns-local"
-      },
-      {
-        "rule_set": "geosite-ir",
-        "server": "dns-local"
       }
     ],
     "final": "dns-remote"
@@ -43,8 +35,7 @@
         "172.16.0.0/12",
         "fe80::/10",
         "fc00::/7"
-      ],
-      "sniff_override_destination": true
+      ]
     },
     {
       "type": "mixed",
@@ -138,7 +129,11 @@
     ],
     "final": "proxy",
     "auto_detect_interface": true,
-    "override_android_vpn": true
+    "override_android_vpn": true,
+    "default_domain_resolver": {
+      "server": "dns-local",
+      "client_subnet": "1.1.1.2"
+    }
   },
   "experimental": {
     "cache_file": {
