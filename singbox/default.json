@@ -35,9 +35,7 @@
         "172.16.0.0/12",
         "fe80::/10",
         "fc00::/7"
-      ],
-      "sniff": true,
-      "sniff_override_destination": true
+      ]
     },
     {
       "type": "mixed",
@@ -69,6 +67,10 @@
   ],
   "route": {
     "rules": [
+      {
+        "inbound": "tun-in",
+        "action": "sniff"
+      },
       {
         "inbound": "mixed-in",
         "action": "sniff"
