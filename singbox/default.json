@@ -1,6 +1,7 @@
 {
   "log": {
-    "level": "warn"
+    "level": "info",
+    "timestamp": true
   },
   "dns": {
     "servers": [
@@ -15,9 +16,28 @@
         "type": "local",
         "tag": "dns-local",
         "detour": "direct"
+      },
+      {
+        "type": "fakeip",
+        "tag": "fakeip",
+        "inet4_range": "198.18.0.0/15",
+        "inet6_range": "fc00::/18"
       }
     ],
-    "final": "dns-remote"
+    "rules": [
+      {
+        "rule_set": "geosite-ir",
+        "server": "dns-local"
+      },
+      {
+        "query_type": [
+          "A",
+          "AAAA"
+        ],
+        "server": "fakeip",
+        "rewrite_ttl": 1
+      }
+    ]
   },
   "inbounds": [
     {
@@ -32,7 +52,6 @@
         "192.168.0.0/16",
         "10.0.0.0/8",
         "169.254.0.0/16",
-        "172.16.0.0/12",
         "fe80::/10",
         "fc00::/7"
       ]
@@ -87,10 +106,6 @@
         "outbound": "direct"
       },
       {
-        "domain_suffix": ".ir",
-        "outbound": "direct"
-      },
-      {
         "ip_is_private": true,
         "outbound": "direct"
       },
@@ -130,15 +145,13 @@
     "final": "proxy",
     "auto_detect_interface": true,
     "override_android_vpn": true,
-    "default_domain_resolver": {
-      "server": "dns-local",
-      "client_subnet": "1.1.1.2"
-    }
+    "default_domain_resolver": "dns-local"
   },
   "experimental": {
     "cache_file": {
       "enabled": true,
-      "store_rdrc": true
+      "store_rdrc": true,
+      "store_fakeip": true
     }
   }
 }
