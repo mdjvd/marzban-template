@@ -46,12 +46,8 @@ dns:
     - "+.lan"
     - "+.local"
   nameserver:
-    - 'https://1.1.1.1/dns-query#PROXY&h3=true'
-    - 'https://1.1.1.1/dns-query#PROXY'
-  proxy-server-nameserver:
-    - '178.22.122.100'
-    - '10.202.10.202'
-    - '78.157.42.100'
+    - 'https://1.1.1.2/dns-query#PROXY&h3=true'
+    - 'https://1.1.1.2/dns-query#PROXY'
 
 {{ conf | except("proxy-groups", "port", "mode", "rules") | yaml }}
 
@@ -83,7 +79,7 @@ proxy-groups:
   type: 'load-balance'
   url: 'https://cp.cloudflare.com'
   interval: 180
-  strategy: 'round-robin'
+  strategy: 'sticky-sessions'
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
