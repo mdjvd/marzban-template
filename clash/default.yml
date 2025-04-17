@@ -17,7 +17,7 @@ profile:
 
 sniffer:
   enable: true
-  override-destination: false
+ # override-destination: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -93,7 +93,7 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt"
     path: ./ruleset/ir.txt
     interval: 86400
-  category-ads-all:
+  ads:
     type: http
     format: text
     behavior: domain
@@ -151,15 +151,16 @@ rule-providers:
     interval: 86400
 
 rules:
-  - IP-CIDR,10.10.34.0/24,PROXY
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,apps,DIRECT
-  - RULE-SET,ads,REJECT
-  - RULE-SET,malware,REJECT
-  - RULE-SET,phishing,REJECT
-  - RULE-SET,cryptominers,REJECT
   - RULE-SET,ir,DIRECT
   - RULE-SET,ircidr,DIRECT
   - RULE-SET,irasn,DIRECT
   - DOMAIN-KEYWORD,snapdrop,DIRECT
+  - DOMAIN-KEYWORD,snapdrop,DIRECT 
+  - RULE-SET,ads,REJECT
+  - RULE-SET,malware,REJECT
+  - RULE-SET,phishing,REJECT
+  - RULE-SET,cryptominers,REJECT
+  - IP-CIDR,10.10.34.0/24,PROXY
   - MATCH,PROXY
