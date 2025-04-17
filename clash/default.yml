@@ -1,15 +1,15 @@
 mixed-port: 10801
-allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: strict
-global-client-fingerprint: chrome
+bind-address: "*"
 mode: rule
 log-level: debug
+find-process-mode: strict
+global-client-fingerprint: chrome
+allow-lan: true
 ipv6: true
-bind-address: "*"
-keep-alive-interval: 30
+tcp-concurrent: true
+enable-process: true
 unified-delay: true
+keep-alive-interval: 30
 
 profile:
   store-selected: true
