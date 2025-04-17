@@ -9,7 +9,7 @@ log-level: debug
 ipv6: true
 bind-address: "*"
 keep-alive-interval: 30
-unified-delay: false
+unified-delay: true
 
 profile:
   store-selected: true
@@ -17,10 +17,10 @@ profile:
 
 sniffer:
   enable: true
+  override-destination: false
   sniff:
     HTTP:
       ports: [80, 8080-8880]
-      override-destination: true
     TLS:
       ports: [443, 8443]
     QUIC:
@@ -64,7 +64,7 @@ proxy-groups:
 
 - name: '📶 First Available'
   type: 'fallback'
-  url: 'https://cp.cloudflare.com'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
@@ -72,14 +72,14 @@ proxy-groups:
 - name: '⚡️ Fastest'
   type: 'url-test'
   tolerance: 50
-  url: 'https://cp.cloudflare.com'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
 - name: '♻️ Load Balance'
   type: 'load-balance'
-  url: 'https://cp.cloudflare.com'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
   strategy: 'sticky-sessions'
   proxies:
@@ -93,12 +93,12 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt"
     path: ./ruleset/ir.txt
     interval: 86400
-  ads:
+  category-ads-all:
     type: http
     format: text
     behavior: domain
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ads.txt"
-    path: ./ruleset/ads.txt
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.txt"
+    path: ./ruleset/category-ads-all.txt
     interval: 86400
   malware:
     type: http
