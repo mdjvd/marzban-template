@@ -17,7 +17,7 @@ profile:
 
 sniffer:
   enable: true
-  override-destination: false
+  override-destination: true
   sniff:
     HTTP:
       ports: [80, 8080-8880]
@@ -66,14 +66,18 @@ proxy-groups:
   type: 'fallback'
   url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
+  max-failed-times: 2
+  lazy: false
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
 - name: '⚡️ Fastest'
   type: 'url-test'
-  tolerance: 50
   url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
+  tolerance: 50
+  max-failed-times: 2
+  lazy: false
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
@@ -81,7 +85,9 @@ proxy-groups:
   type: 'load-balance'
   url: 'https://cp.cloudflare.com/generate_204'
   interval: 180
+  max-failed-times: 2
   strategy: 'sticky-sessions'
+  lazy: false
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
 
@@ -157,7 +163,7 @@ rules:
   - RULE-SET,ircidr,DIRECT
   - RULE-SET,irasn,DIRECT
   - DOMAIN-KEYWORD,snapdrop,DIRECT
-  - DOMAIN-KEYWORD,snapdrop,DIRECT 
+  - DOMAIN-KEYWORD,pairdrop,DIRECT
   - RULE-SET,ads,REJECT
   - RULE-SET,malware,REJECT
   - RULE-SET,phishing,REJECT
