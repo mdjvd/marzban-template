@@ -61,7 +61,9 @@
       {
         "domain": [
           "domain:.ir",
-          "regexp:.*\\.ir"
+          "regexp:.*\\.ir",
+          "snapdrop",
+          "pairdrop"
         ],
         "outboundTag": "direct"
       },
