@@ -66,9 +66,9 @@
       "type": "urltest",
       "tag": "⚡️ Auto",
       "outbounds": null,
-      "url": "https://www.gstatic.com/generate_204",
-      "interval": "3m0s",
-      "tolerance": 50
+      "url": "https://cp.cloudflare.com/generate_204",
+      "interval": "5m0s",
+      "tolerance": 100
     },
     {
       "type": "direct",
