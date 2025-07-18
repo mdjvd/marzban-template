@@ -8,6 +8,8 @@ allow-lan: true
 ipv6: true
 tcp-concurrent: true
 enable-process: true
+auto-detect-interface: true
+auto-route: true
 unified-delay: true
 keep-alive-interval: 30
 
@@ -47,9 +49,10 @@ dns:
     - "+.local"
   nameserver:
     - 'https://1.1.1.2/dns-query#PROXY&h3=true'
-    - 'https://1.1.1.2/dns-query#PROXY'
   proxy-server-nameserver:
-    - 'https://1.1.1.2/dns-query'
+    - '178.22.122.100'
+    - '10.202.10.202'
+    - '78.157.42.100'
 
 {{ conf | except("proxy-groups", "port", "mode", "rules") | yaml }}
 
@@ -65,8 +68,9 @@ proxy-groups:
 - name: '📶 First Available'
   type: 'fallback'
   url: 'https://cp.cloudflare.com/generate_204'
-  interval: 180
-  max-failed-times: 2
+  interval: 300
+  max-failed-times: 1
+  timeout: 3000
   lazy: false
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
@@ -74,9 +78,10 @@ proxy-groups:
 - name: '⚡️ Fastest'
   type: 'url-test'
   url: 'https://cp.cloudflare.com/generate_204'
-  interval: 180
+  interval: 300
   tolerance: 50
-  max-failed-times: 2
+  max-failed-times: 1
+  timeout: 3000
   lazy: false
   proxies:
   {{ proxy_remarks | yaml | indent(2) }}
@@ -84,8 +89,9 @@ proxy-groups:
 - name: '♻️ Load Balance'
   type: 'load-balance'
   url: 'https://cp.cloudflare.com/generate_204'
-  interval: 180
-  max-failed-times: 2
+  interval: 300
+  max-failed-times: 1
+  timeout: 3000
   strategy: 'sticky-sessions'
   lazy: false
   proxies:
