@@ -57,8 +57,13 @@ dns:
 {{ conf | except("proxy-groups", "port", "mode", "rules") | yaml }}
 
 proxy-groups:
-- name: 'PROXY'
+- name: '☑️PROXY'
   type: 'select'
+  url: 'http://cp.cloudflare.com/generate_204'
+  interval: 300
+  max-failed-times: 1
+  timeout: 3000
+  lazy: false
   proxies:
   - '📶 First Available'
   - '⚡️ Fastest'
@@ -67,7 +72,7 @@ proxy-groups:
 
 - name: '📶 First Available'
   type: 'fallback'
-  url: 'https://cp.cloudflare.com/generate_204'
+  url: 'http://cp.cloudflare.com/generate_204'
   interval: 300
   max-failed-times: 1
   timeout: 3000
@@ -77,7 +82,7 @@ proxy-groups:
 
 - name: '⚡️ Fastest'
   type: 'url-test'
-  url: 'https://cp.cloudflare.com/generate_204'
+  url: 'http://cp.cloudflare.com/generate_204'
   interval: 300
   tolerance: 50
   max-failed-times: 1
@@ -88,7 +93,7 @@ proxy-groups:
 
 - name: '♻️ Load Balance'
   type: 'load-balance'
-  url: 'https://cp.cloudflare.com/generate_204'
+  url: 'http://cp.cloudflare.com/generate_204'
   interval: 300
   max-failed-times: 1
   timeout: 3000
@@ -174,5 +179,5 @@ rules:
   - RULE-SET,malware,REJECT
   - RULE-SET,phishing,REJECT
   - RULE-SET,cryptominers,REJECT
-  - IP-CIDR,10.10.34.0/24,PROXY
-  - MATCH,PROXY
+  - IP-CIDR,10.10.34.0/24,☑️PROXY
+  - MATCH,☑️PROXY
