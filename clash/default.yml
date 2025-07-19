@@ -48,8 +48,11 @@ dns:
     - "+.lan"
     - "+.local"
   nameserver:
-    - 'https://1.1.1.2/dns-query#PROXY&h3=true'
+    - 'https://1.1.1.2/dns-query&h3=true'
+    - 'https://1.1.1.2/dns-query'
   proxy-server-nameserver:
+    - '1.1.1.2'
+    - '8.8.8.8'
     - '178.22.122.100'
     - '10.202.10.202'
     - '78.157.42.100'
@@ -117,41 +120,6 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/category-ads-all.txt"
     path: ./ruleset/category-ads-all.txt
     interval: 86400
-  malware:
-    type: http
-    format: text
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/malware.txt"
-    path: ./ruleset/malware.txt
-    interval: 86400
-  phishing:
-    type: http
-    format: text
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/phishing.txt"
-    path: ./ruleset/phishing.txt
-    interval: 86400
-  cryptominers:
-    type: http
-    format: text
-    behavior: domain
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/cryptominers.txt"
-    path: ./ruleset/cryptominers.txt
-    interval: 86400
-  apps:
-    type: http
-    format: text
-    behavior: classical
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/apps.txt"
-    path: ./ruleset/apps.txt
-    interval: 86400
-  ircidr:
-    type: http
-    format: text
-    behavior: ipcidr
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt"
-    path: ./ruleset/ircidr.txt
-    interval: 86400
   private:
     type: http
     format: text
@@ -159,25 +127,10 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/private.txt"
     path: ./ruleset/private.txt
     interval: 86400
-  irasn:
-    type: http
-    format: text
-    behavior: classical
-    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.txt"
-    path: ./ruleset/irasn.txt
-    interval: 86400
 
 rules:
   - RULE-SET,private,DIRECT,no-resolve
-  - RULE-SET,apps,DIRECT
   - RULE-SET,ir,DIRECT
-  - RULE-SET,ircidr,DIRECT
-  - RULE-SET,irasn,DIRECT
   - DOMAIN-KEYWORD,snapdrop,DIRECT
   - DOMAIN-KEYWORD,pairdrop,DIRECT
-  - RULE-SET,ads,REJECT
-  - RULE-SET,malware,REJECT
-  - RULE-SET,phishing,REJECT
-  - RULE-SET,cryptominers,REJECT
-  - IP-CIDR,10.10.34.0/24,☑️PROXY
   - MATCH,☑️PROXY
