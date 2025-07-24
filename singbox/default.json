@@ -50,9 +50,8 @@
     {
       "type": "mixed",
       "tag": "mixed-in",
-      "listen": "::",
+      "listen": "127.0.0.1",
       "listen_port": 10808,
-      "set_system_proxy": true,
       "tcp_fast_open": true
     }
   ],
