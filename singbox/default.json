@@ -52,6 +52,7 @@
       "tag": "mixed-in",
       "listen": "::",
       "listen_port": 10808,
+      "set_system_proxy": true
       "tcp_fast_open": true
     }
   ],
@@ -132,8 +133,7 @@
       }
     ],
     "final": "proxy",
-    "auto_detect_interface": true,
-    "override_android_vpn": true
+    "auto_detect_interface": true
   },
   "experimental": {
     "cache_file": {
