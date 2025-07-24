@@ -52,7 +52,7 @@
       "tag": "mixed-in",
       "listen": "::",
       "listen_port": 10808,
-      "set_system_proxy": true
+      "set_system_proxy": true,
       "tcp_fast_open": true
     }
   ],
