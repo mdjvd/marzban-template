@@ -120,6 +120,13 @@ rule-providers:
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.txt"
     path: ./ruleset/irasn.txt
     interval: 86400
+  ircidr:
+    type: http
+    format: text
+    behavior: ipcidr
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ircidr.txt"
+    path: ./ruleset/ircidr.txt
+    interval: 86400
   apps:
     type: http
     format: text
@@ -146,6 +153,7 @@ rules:
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,ir,DIRECT
   - RULE-SET,irasn,DIRECT
+  - RULE-SET,ircidr,DIRECT
   - RULE-SET,apps,DIRECT
   - DOMAIN-KEYWORD,snapdrop,DIRECT
   - DOMAIN-KEYWORD,pairdrop,DIRECT
