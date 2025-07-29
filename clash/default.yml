@@ -62,7 +62,7 @@ dns:
 proxy-groups:
 - name: '☑️PROXY'
   type: 'select'
-  url: 'http://cp.cloudflare.com/generate_204'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 300
   max-failed-times: 1
   timeout: 3000
@@ -75,7 +75,7 @@ proxy-groups:
 
 - name: '📶 First Available'
   type: 'fallback'
-  url: 'http://cp.cloudflare.com/generate_204'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 300
   max-failed-times: 1
   timeout: 3000
@@ -85,7 +85,7 @@ proxy-groups:
 
 - name: '⚡️ Fastest'
   type: 'url-test'
-  url: 'http://cp.cloudflare.com/generate_204'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 300
   tolerance: 50
   max-failed-times: 1
@@ -96,7 +96,7 @@ proxy-groups:
 
 - name: '♻️ Load Balance'
   type: 'load-balance'
-  url: 'http://cp.cloudflare.com/generate_204'
+  url: 'https://cp.cloudflare.com/generate_204'
   interval: 300
   max-failed-times: 1
   timeout: 3000
@@ -112,6 +112,20 @@ rule-providers:
     behavior: domain
     url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/ir.txt"
     path: ./ruleset/ir.txt
+    interval: 86400
+  irasn:
+    type: http
+    format: text
+    behavior: classical
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/irasn.txt"
+    path: ./ruleset/irasn.txt
+    interval: 86400
+  apps:
+    type: http
+    format: text
+    behavior: classical
+    url: "https://raw.githubusercontent.com/Chocolate4U/Iran-clash-rules/release/apps.txt"
+    path: ./ruleset/apps.txt
     interval: 86400
   ads:
     type: http
@@ -131,6 +145,9 @@ rule-providers:
 rules:
   - RULE-SET,private,DIRECT,no-resolve
   - RULE-SET,ir,DIRECT
+  - RULE-SET,irasn,DIRECT
+  - RULE-SET,apps,DIRECT
   - DOMAIN-KEYWORD,snapdrop,DIRECT
   - DOMAIN-KEYWORD,pairdrop,DIRECT
+  - RULE-SET,ads,REJECT
   - MATCH,☑️PROXY
