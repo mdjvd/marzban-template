@@ -60,7 +60,7 @@ dns:
 {{ conf | except("proxy-groups", "port", "mode", "rules") | yaml }}
 
 proxy-groups:
-- name: '☑️PROXY'
+- name: 'PROXY'
   type: 'select'
   url: 'https://cp.cloudflare.com/generate_204'
   interval: 300
@@ -158,4 +158,4 @@ rules:
   - DOMAIN-KEYWORD,snapdrop,DIRECT
   - DOMAIN-KEYWORD,pairdrop,DIRECT
   - RULE-SET,ads,REJECT
-  - MATCH,☑️PROXY
+  - MATCH,PROXY
